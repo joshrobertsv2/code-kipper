@@ -24,8 +24,10 @@ app.use(cookieParser("secretcode"))
 
 
 /* PASSPORT SETUP */
+const { passportLocal, serialize, deserialize } = require('./passport/local')
 app.use(passport.initialize())
 app.use(passport.session())
+passport.use(passportLocal)
 
 /* DATABASE CONFIG */
 mongoose.connect(
