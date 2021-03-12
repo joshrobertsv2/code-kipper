@@ -12,6 +12,14 @@ require('dotenv').config()
 const app = express()
 const PORT = 3001 || process.env.PORT
 
+/* DATABASE CONFIG */
+mongoose.connect(
+  process.env.DB_CONNECTION_STRING, 
+  {useNewUrlParser: true, useUnifiedTopology: true }, 
+  () => console.log('connected to db')
+)
+const db = mongoose.connection
+
 //MIDDLEWARE
 app.use(express.json())
 app.use(cors())
@@ -28,14 +36,6 @@ const { passportLocal, serialize, deserialize } = require('./passport/local')
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(passportLocal)
-
-/* DATABASE CONFIG */
-mongoose.connect(
-  process.env.DB_CONNECTION_STRING, 
-  {useNewUrlParser: true, useUnifiedTopology: true }, 
-  () => console.log('connected to db')
-)
-
 
 /* ROUTES */
 app.use('/login', require('./routes/login'))
