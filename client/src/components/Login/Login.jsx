@@ -3,10 +3,19 @@ import { useHistory } from 'react-router-dom'
 import { Container, FormInput, SubmitButton, Label, Title, RegisterText } from './Login.styles'
 import axios from 'axios'
 
+const setAppStyles = () => {
+  const app = document.querySelector('#root')
+
+  app.style.display = 'flex'
+  app.style.justifyContent = 'center'
+  app.style.alignItems = 'center'
+}
+
 const Login = () => {
   const emailInput = useRef()
   const passwordInput = useRef()
   const history = useHistory()
+  setAppStyles()
   
   const handleSubmit = async (e) => {
     e.preventDefault()
