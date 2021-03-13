@@ -4,7 +4,7 @@ const kipperController = require('../controllers/kipperController')
 
 router.post('/', kipperController.addCodeSnippet)
 
-router.get('/', kipperController.getUserSnippets)
+router.get('/:user_id', kipperController.getUserSnippets)
 
 router.put('/', kipperController.editSnippet)
 
