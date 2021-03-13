@@ -40,6 +40,9 @@ passport.use(passportLocal)
 /* ROUTES */
 app.use('/login', require('./routes/login'))
 app.use('/register', require('./routes/register'))
+app.use('/kipper', require('./routes/kipper'))
+app.use('/', require('./routes/home'))
+
 
 
 

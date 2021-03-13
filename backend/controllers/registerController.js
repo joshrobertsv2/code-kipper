@@ -5,7 +5,7 @@ const registerController = {}
 
 registerController.createUser = (req, res) => {
   const { email, password, name } = req.body
-  Users.create({name: name, email, password}, (err, data) => {
+  Users.create({name, email, password}, (err, data) => {
     const { email, name} = data
     if(err) 
       res.status(500).send('failed')
