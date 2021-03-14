@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  border: 1px solid gray;
-  grid-area: sidebar`
+  grid-area: sidebar;
+  filter: ${(modalOpen) => modalOpen? 'blur(5px)': 'none'}`
 Container.displayName = 'Container'
 
 export const Option = styled.li`

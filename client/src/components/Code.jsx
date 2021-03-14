@@ -11,7 +11,7 @@ export default function Code2({ code, language }) {
   useEffect(() => {
     (async () => {
       await setFormattedCode(code.replace(/\\n/g, '\n'))
-      Prism.highlightAll();
+      Prism.highlightAll()
     })()
   }, [formattedCode, code]);
 

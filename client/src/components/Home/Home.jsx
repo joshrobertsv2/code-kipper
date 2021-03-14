@@ -4,6 +4,7 @@ import Sidebar from '../Sidebar/Sidebar'
 import axios from 'axios'
 import { Switch } from '@material-ui/core/'
 import Code2 from '../Code'
+import Modal from '../AddSnippetModal/Modal'
 
 const AppStyles = () => {
   const app = document.querySelector('#root')
@@ -36,6 +37,8 @@ const Home = () => {
     private: false,
   }])
 
+  const [openModal, setOpenModal] = useState(true)
+
   useEffect( () => {
     AppStyles()
     fetchposts()
@@ -55,9 +58,10 @@ const Home = () => {
 
   return (
     <>
-      <Title>Code Kipper</Title>
-      <Sidebar />
-      <PostsContainer>
+      <Modal isOpen={openModal}/>
+      <Title modalOpen={openModal}>Code Kipper</Title>
+      <Sidebar modalOpen={openModal} />
+      <PostsContainer modalOpen={openModal}>
           {userPosts.map( (post, idx) => (
             <Post key={idx}>
               <Username>Ashley Pean</Username>
@@ -71,17 +75,18 @@ const Home = () => {
                 <Tag key={idx}>{el}</Tag>
               ))}
               <Switch checked={post.private} />
-
             </Post>
           ))}
       </PostsContainer>
 
-      <Sidecard>
+      <Sidecard >
         <button onClick={addSnippet}>Add a snippet</button>
       </Sidecard>
     </>
 
   )
 }
+
+
 
 export default Home

@@ -2,12 +2,11 @@ import styled from 'styled-components'
 
 export const PostsContainer = styled.div`
   grid-area: home;
-  border: 1px solid green;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem 0;
-  padding: 2rem 0;`
+  filter: ${(modalOpen) => modalOpen? 'blur(5px)': 'none'}`
 PostsContainer.displayName = 'PostsContainer'
 
 
@@ -20,12 +19,13 @@ Title.displayName = 'Title'
 
 export const Sidecard = styled.div`
   grid-area: sidecard;
-  border: 1px solid blue;`
+  filter: ${(modalOpen) => modalOpen? 'blur(5px)': 'none'}`
 Sidecard.displayName = 'Sidecard'
 
 
 export const Post = styled.div`
-  border: 1px solid red;
+  border-radius: 6px;
+  box-shadow: 5px 5px 15px 5px #A4A4A4;
   width: 80%;
   padding: 1rem;`
 Post.displayName = 'Post'
