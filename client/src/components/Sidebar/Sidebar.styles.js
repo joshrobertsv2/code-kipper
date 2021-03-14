@@ -8,7 +8,7 @@ Container.displayName = 'Container'
 export const Option = styled.li`
   text-decoration: none;
   list-style-type: none;
-  color: blue;
+  color: black;
   font-size: 2rem;
   margin: 2rem 0;`
 Option.displayName = 'Option'

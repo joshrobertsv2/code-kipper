@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { PostsContainer, Title, Sidecard, Post, Code, Username, Pre, Likes, Tag, Description } from './Home.styles'
+import { PostsContainer, Title, Sidecard, Post, Username, Likes, Tag, Description } from './Home.styles'
 import Sidebar from '../Sidebar/Sidebar'
 import axios from 'axios'
 import { Switch } from '@material-ui/core/'
+import Code2 from '../Code'
 
 const AppStyles = () => {
   const app = document.querySelector('#root')
@@ -47,7 +48,7 @@ const Home = () => {
     changeUserPosts(res.data.data)
   }
 
-  const addASnippet = (e) => {
+  const addSnippet = (e) => {
 
   }
 
@@ -60,18 +61,14 @@ const Home = () => {
           {userPosts.map( (post, idx) => (
             <Post key={idx}>
               <Username>Ashley Pean</Username>
-              
-              <Pre>
-                <Code>
-                  {post.snippet}
-                </Code>
-              </Pre>
+              <Code2 code={post?.snippet} language="javascript"/>
               <Description>
                 {post?.description || dummyText}
               </Description>
               <Likes>{post?.likes || '0'} likes</Likes>
+              <Tag>Tags: </Tag>
               {post?.tags.map((el, idx) => (
-                <Tag>{el}</Tag>
+                <Tag key={idx}>{el}</Tag>
               ))}
               <Switch checked={post.private} />
 
@@ -80,7 +77,7 @@ const Home = () => {
       </PostsContainer>
 
       <Sidecard>
-        <button onClick={addASnippet}>Add a snippet</button>
+        <button onClick={addSnippet}>Add a snippet</button>
       </Sidecard>
     </>
 

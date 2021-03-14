@@ -41,8 +41,6 @@ Pre.displayName = 'Pre'
 
 export const Code = styled.code`
   width: 100%;
-  background: black;
-  color: white;
   padding: 1rem;
   border-radius: 4px;
   overflow: scroll;
