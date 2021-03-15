@@ -6,7 +6,7 @@ export const PostsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem 0;
-  filter: ${(modalOpen) => modalOpen? 'blur(5px)': 'none'}`
+  filter: ${props => props.modalOpen? 'blur(5px)': 'blur(0px)'};`
 PostsContainer.displayName = 'PostsContainer'
 
 
@@ -19,7 +19,7 @@ Title.displayName = 'Title'
 
 export const Sidecard = styled.div`
   grid-area: sidecard;
-  filter: ${(modalOpen) => modalOpen? 'blur(5px)': 'none'}`
+  filter: ${props => props.modalOpen? 'blur(5px)': 'blur(0px)'}};`
 Sidecard.displayName = 'Sidecard'
 
 
@@ -60,3 +60,7 @@ export const Description = styled.p`
   `
 Description.displayName = 'Description'
 
+export const Button = styled.button`
+  border: none;
+  font-size: 2rem;`
+Button.displayName = 'Button'

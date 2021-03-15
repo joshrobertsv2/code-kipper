@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
-import { Button, Switch, FormControlLabel, TextField, Chip, Select, InputLabel, MenuItem } from '@material-ui/core'
-import { Container, TextArea, Code, Pre, TagsContainer } from './Modal.styles'
+import { Switch, Chip, Button, FormControlLabel, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core'
+import { Container, TextArea, Code, Pre, TagsContainer, Label, Input } from './Modal.styles'
 import Prism from 'prismjs'
 import "prismjs/themes/prism-tomorrow.css"
 import languagesObj from '../../utils/supportedLanguages'
+import axios from 'axios'
 
 
 //snippet, tags, description, private, language
-const Modal = ({ isOpen }) => {
+const Modal = ({ isOpen, changeIsOpen }) => {
+  const [tagText, setTagText] = useState('')
   const [snippet, changeSnippet] = useState({
+    user_id: '604acd00433005638077804a',
     tags: [], 
     private: true, 
     language: 'javascript', 
     description: '',
     text: "const snippet = 'Insert text here'"
   })
-  const [tagText, setTagText] = useState('')
-
+  
 
   const handleInput = async (e) => {
     await changeSnippet({...snippet, text: e.target.value})
@@ -28,11 +30,12 @@ const Modal = ({ isOpen }) => {
     await setTagText(e?.target.value || e.value)
 
     if(e.target.value.includes(',') || e.target.value.includes(' ')) {
-      const newTag = tagText.slice(0, tagText.length)
-      const tagsArray = snippet.tags
-      tagsArray.push(newTag)
+      const newTagText = tagText.slice(0, tagText.length)
 
-      await changeSnippet({tags: tagsArray})
+      const tagsArray = snippet.tags
+      tagsArray.push(newTagText)
+
+      await changeSnippet({...snippet, tags: tagsArray})
 
       setTagText('')
       e.target.value = ''
@@ -40,77 +43,93 @@ const Modal = ({ isOpen }) => {
       
   }
 
-  const handleSubmit = (e) => {
+  const handleBadSubmit = (e) => {
     e.preventDefault()
   }
 
+  const selectLanguage = async (e) => {
+    changeSnippet({...snippet, language: e.target.value})
+  }
 
+  const changePrivacy = () => {
+    changeSnippet({...snippet, private: !snippet.private})
+  }
 
-  /* TODO: FIGURE OUT WHY TAGS ARE DELETING LATE */
-  const handleDelete = async (idx) => {
+  const deleteTag = async (idx) => {
     let newTags = snippet.tags
     newTags.splice(idx, 1)
-    await changeSnippet({tags: newTags})
+    await changeSnippet({...snippet, tags: newTags})
+  }
+
+  const createSnippet = async (e) => {
+    e.preventDefault()
+    console.log(snippet)
+
+    axios.post('/kipper', snippet)
+    changeIsOpen(false)
   }
 
   return isOpen ?  
   ReactDOM.createPortal(
-    <Container onSubmit={handleSubmit}>
-
-      {/* eslint-disable-next-line */}
-      <InputLabel id="language">Language</InputLabel>
-      <Select labelId="language" value={snippet.language}>
-        {Object.keys(languagesObj).map((el, idx) => (
-          <MenuItem key={idx} value={el} onClick={() => changeSnippet({...snippet, language: el})}> {el} </MenuItem>
-        ))}
-      </Select>
-
-      <TextArea onChange={handleInput} 
-        placeholder="const snippet = 'Insert text here'"
-        rows="5" 
-        cols="70" wrap="soft"/>
+    <Container onSubmit={handleBadSubmit}>
       
+      {/* Select Language */}
+      <FormControl  >
+        <InputLabel id="language" >Language</InputLabel>
+          <Select labelId="language" value={snippet.language} onChange={selectLanguage}>
+            {Object.keys(languagesObj).map((language, idx) => (
+              <MenuItem key={idx} value={language}>
+                {language}
+              </MenuItem>
+            ))}
+          </Select>
+      </FormControl>
 
-     <Pre>
+
+
+      {/* code snippet */}
+      <Label htmlFor="code-snippet">Copy code here: </Label>
+      <TextArea 
+        id="code-snippet"
+        onChange={handleInput} 
+        placeholder="const snippet = 'Insert text here'"
+        rows="5" cols="70" wrap="soft"
+        />
+
+      <Pre>
        <Code className={`language-${languagesObj[snippet.language]}`}>
          {snippet.text}
        </Code>
      </Pre>
 
-      <FormControlLabel
-        control={<TextArea aria-label="minimum height" 
+      {/* description*/}
+      <Label htmlFor="description">Description </Label>
+      <TextArea 
+        id="description"
         rows={6} cols={60} resize="false" 
         placeholder="Minimum 3 rows" margin="1rem"
         onChange={(e) => changeSnippet({...snippet, description: e.target.value})} 
-        />}
-        label="Description"
-        labelPlacement="top"
-      />
-      
+        />
 
       <FormControlLabel
-        control={<Switch checked={snippet.privacy} onChange={() => changeSnippet({privacy: !snippet.privacy})} name="checkedA" />}
-        label={snippet.privacy? 'Public': 'Private'}
+        control={<Switch checked={snippet.private} onChange={changePrivacy}  />}
+        label={snippet.private? 'Public': 'Private'}
       />
 
 
-    <FormControlLabel 
-    control={<TextField id="outlined-basic" className="tag-input" variant="outlined" onChange={handleTagInput}/>}
-    label="Tags"
-    labelPlacement="top"
-    />
-     
 
-    <TagsContainer>
-      {snippet?.tags?.length > 0 ? snippet.tags.map((tag, idx) => (
+      <Label htmlFor="tags">Tags</Label>
+      <Input id="tags" onChange={handleTagInput}/>
+        
+      <TagsContainer>
+      {snippet.tags.map((tag, idx) => (
         <Chip variant="outlined" key={idx} color="primary"
-        onDelete={() => handleDelete(idx)}
+        onDelete={() => deleteTag(idx)}
         label={tag}/>
-      )) : null}
+      ))}
     </TagsContainer>
 
- 
-      <Button variant="contained" color="primary" disableElevation>Submit</Button>
+    <Button variant="contained" color="primary" disableElevation onClick={createSnippet}>Submit</Button>
     </Container>
   , document.querySelector('#portal')
   )

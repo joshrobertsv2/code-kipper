@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   grid-area: sidebar;
-  filter: ${(modalOpen) => modalOpen? 'blur(5px)': 'none'}`
+  filter: ${props => props.modalOpen? 'blur(5px)': 'blur(0px)'}`
 Container.displayName = 'Container'
 
 export const Option = styled.li`

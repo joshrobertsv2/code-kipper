@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { PostsContainer, Title, Sidecard, Post, Username, Likes, Tag, Description } from './Home.styles'
+import { PostsContainer, Title, Sidecard, Post, Username, Likes, Tag, Description, Button } from './Home.styles'
 import Sidebar from '../Sidebar/Sidebar'
 import axios from 'axios'
-import { Switch } from '@material-ui/core/'
+import { Switch, FormControlLabel, Chip } from '@material-ui/core/'
 import Code2 from '../Code'
 import Modal from '../AddSnippetModal/Modal'
 
@@ -37,7 +37,7 @@ const Home = () => {
     private: false,
   }])
 
-  const [openModal, setOpenModal] = useState(true)
+  const [modalOpen, setOpenModal] = useState(false)
 
   useEffect( () => {
     AppStyles()
@@ -51,17 +51,21 @@ const Home = () => {
     changeUserPosts(res.data.data)
   }
 
-  const addSnippet = (e) => {
-
+  const changePrivacy = async (e, idx) => {
+    console.log(e.target.checked)
+    const postsCopy = userPosts
+    postsCopy[idx] = {...postsCopy[idx], private: !postsCopy[idx].private}
+    await changeUserPosts(postsCopy)
+    console.log(userPosts)
   }
 
 
   return (
     <>
-      <Modal isOpen={openModal}/>
-      <Title modalOpen={openModal}>Code Kipper</Title>
-      <Sidebar modalOpen={openModal} />
-      <PostsContainer modalOpen={openModal}>
+      <Modal isOpen={modalOpen} changeIsOpen={setOpenModal}/>
+      <Title modalOpen={modalOpen}>Code Kipper</Title>
+      <Sidebar modalOpen={modalOpen} />
+      <PostsContainer modalOpen={modalOpen}>
           {userPosts.map( (post, idx) => (
             <Post key={idx}>
               <Username>Ashley Pean</Username>
@@ -71,16 +75,21 @@ const Home = () => {
               </Description>
               <Likes>{post?.likes || '0'} likes</Likes>
               <Tag>Tags: </Tag>
-              {post?.tags.map((el, idx) => (
-                <Tag key={idx}>{el}</Tag>
+              {post?.tags.map((tag, idx) => (
+                <Chip variant="outlined" key={idx} color="primary"
+                label={tag}/>
               ))}
-              <Switch checked={post.private} />
+              <FormControlLabel 
+              control={<Switch color="primary" checked={post?.private || false} />}
+              label={post.private? 'Private': 'Public'}
+              />
+              
             </Post>
           ))}
       </PostsContainer>
 
       <Sidecard >
-        <button onClick={addSnippet}>Add a snippet</button>
+        <Button onClick={() => setOpenModal(true)}>+</Button>
       </Sidecard>
     </>
 
