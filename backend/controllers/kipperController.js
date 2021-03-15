@@ -5,9 +5,9 @@ const kipperController = {}
 
 
 kipperController.addCodeSnippet = (req, res) => {
-  const { user_id, snippet, likes, tags } = req.body
-
-  Snippets.create({ user_id, snippet, likes, tags }, (err, data) => {
+  const { user_id, text, tags } = req.body
+  const snippet = text
+  Snippets.create({ user_id, snippet, likes: 0, tags }, (err, data) => {
     
     if(err) res.status(500).send({message: 'failed', err})
 
