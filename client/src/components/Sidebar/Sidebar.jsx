@@ -4,9 +4,6 @@ import { Container, Option } from './Sidebar.styles'
 import axios from 'axios'
 
 
-/* TODO Change styles based on activePage */
-
-
 const Sidebar = () => {
   const sideBarToggles = ['Home', 'Profile', 'Feed', 'Settings', 'Logout']
   const sideBarUrls = ['/', '/profile', '/feed', '/settings', '/logout']
