@@ -1,28 +1,38 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Container, Option } from './Sidebar.styles'
+import axios from 'axios'
 
-const createSidebar = (options) => {
-  return (
-    <ul>
-      {options.map((el, idx) => (
-        <NavLink key={idx} to="/"  style={{"textDecoration": "none"}} >
-          <Option>{el}</Option>
-        </NavLink>
-      ))}
-    </ul>
-  )
-}
+
+/* TODO Change styles based on activePage */
 
 
 const Sidebar = () => {
   const sideBarToggles = ['Home', 'Profile', 'Feed', 'Settings', 'Logout']
+  const sideBarUrls = ['/', '/profile', '/feed', '/settings', '/logout']
+  const history = useHistory()
+  const location = useLocation()
+
+  const handleRedirect = (newLocation) => {
+    newLocation = newLocation.toLowerCase()
+
+    if(newLocation === 'logout') {
+      axios.get('/logout')
+      history.push('/login')
+    }else {
+      history.push(`/${newLocation}`)
+    }
+  }
+
 
   return (
     <Container>
-      {createSidebar(sideBarToggles)}
+      {sideBarToggles.map((el, idx) => (
+        <Option active={location.pathname === sideBarUrls[idx]}key={idx} onClick={() => handleRedirect(el)}>{el}</Option>
+      ))}
     </Container>
   )
 }
+
 
 export default Sidebar
