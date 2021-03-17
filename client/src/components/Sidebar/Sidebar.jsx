@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 const Sidebar = () => {
   const sideBarToggles = ['Home', 'Profile', 'Feed', 'Settings', 'Logout']
-  const sideBarUrls = ['/', '/profile', '/feed', '/settings', '/logout']
+  const sideBarUrls = ['', 'profile', 'feed', 'settings', 'logout']
   const history = useHistory()
   const location = useLocation()
 
@@ -26,7 +26,7 @@ const Sidebar = () => {
   return (
     <Container>
       {sideBarToggles.map((el, idx) => (
-        <Option active={location.pathname === sideBarUrls[idx]}key={uuidv4()} onClick={() => handleRedirect(el)}>{el}</Option>
+        <Option active={location.pathname === `/${sideBarUrls[idx]}`}key={uuidv4()} onClick={() => handleRedirect(sideBarUrls[idx])}>{el}</Option>
       ))}
     </Container>
   )
