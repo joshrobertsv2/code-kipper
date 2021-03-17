@@ -10,7 +10,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const app = express()
-const PORT = 3001 || process.env.PORT
+const PORT = 3002 || process.env.PORT
 
 /* DATABASE CONFIG */
 mongoose.connect(
@@ -38,7 +38,9 @@ app.use(passport.session())
 passport.use(passportLocal)
 
 /* ROUTES */
+
 app.use('/login', require('./routes/login'))
+app.use('/logout', require('./routes/logout'))
 app.use('/register', require('./routes/register'))
 app.use('/kipper', require('./routes/kipper'))
 app.use('/', require('./routes/home'))

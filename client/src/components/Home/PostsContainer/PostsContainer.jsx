@@ -13,11 +13,15 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
     let newState = userPosts
     newState.splice(idx, 1)
 
+    console.log(post_id)
+
     //Send a delete request to the server
-    const doc = await axios.delete(`/kipper/${userId}`, {data: {post_id}})
-    if(doc.snippet) {
+    const res = await axios.delete(`/kipper/${userId}`, {data: {post_id}})
+
+    if(res.data.doc.snippet) {
       await changeUserPosts([...newState])
     }else {
+      console.log('res')
       window.alert('Could not delete post. Please try again later.')
     }
   }
@@ -59,7 +63,7 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
         <FormControlLabel 
           control={<Switch color="primary" checked={post?.private || false} />}
           label={post.private? 'Private': 'Public'}
-        />
+          />
 
 
         <DeleteIcon onClick={(e) => deletePost(idx, post._id)}/>

@@ -29,6 +29,10 @@ const SnippetsSchema = new mongoose.Schema({
   }, 
   description: {
     type: String
+  }, 
+  language: {
+    type: String, 
+    default: ''
   }
 }, options)
 
