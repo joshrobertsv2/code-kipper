@@ -1,26 +1,33 @@
 import styled from 'styled-components'
 
 export const Container = styled.form`
-display: flex;
-flex-direction: row;
-justify-content: flex-start;
-align-items: start;
-height: 600px;
-width: 60%;
-max-width: 800px;
-background: white;
-position: fixed; 
-padding: 3rem 2rem;
-display: flex;
-flex-direction: column;
-box-sizing: border-box;
-top: 30%;
-left: 20%;
-font-family: Lato;
-border-radius: 12px;
-overflow-y: scroll;
-`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem 0;
+  height: 750px;
+  width: 60%;
+  max-width: 800px;
+  background: white;
+  position: fixed; 
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+  top: 30%;
+  left: 20%;
+  font-family: Lato;
+  overflow-y: scroll;
+  overflow-x: hidden;`
 Container.displayName = 'Container'
+
+
+export const TextArea = styled.textarea`
+  grid-area: 'copyCode';
+  min-width: 300px;
+  min-height: 100px;
+  outline: none;
+  resize: none;
+  background: black;
+  color: white;`
+TextArea.displayName = 'TextArea'
 
 
 export const Pre = styled.pre`
@@ -28,11 +35,10 @@ export const Pre = styled.pre`
   height: auto;
   min-height: 100px;
   border-radius: 4px;
-  outline: none;
-  overflow-y: visible;
-  white-space: pre;`
+  outline: none;`
 Pre.displayName = 'Pre'
  
+
 export const Code = styled.code`
   width: 80%;
   height: auto;
@@ -41,40 +47,34 @@ export const Code = styled.code`
   border-radius: 4px;
   word-wrap: break-word;
   outline: none;
-  overflow-y: visible;
   white-space: pre;`
 Code.displayName = 'Code'
 
-export const TextArea = styled.textarea`
+
+export const Description = styled.textarea`
+  grid-area: 'description';
   min-width: 300px;
   min-height: 100px;
   outline: none;
   resize: none;`
-TextArea.displayName = 'TextArea'
+Description.displayName = 'Description'
+
 
 export const TagsContainer = styled.div`
   width: 75%;
   display: flex;
   flex-direction: row;
   gap: .3rem;
-  overflow -x: scroll;
   flex-wrap: wrap;
   margin: .5rem 0 2rem 0;`
 TagsContainer.displayName = 'TagsContainer'
 
+
 export const Label = styled.label`
-  margin-top: 2rem;
-  margin-bottom: .5rem;
-`
+  margin-top: 1rem;
+  margin-bottom: -.5rem;`
 Label.displayName = 'Label'
 
-export const Select = styled.select`
-`
-Select.displayName = 'Select'
-
-
-export const Option = styled.option``
-Option.displayName = 'Option'
 
 export const Input = styled.input`
   min-height: 25px;

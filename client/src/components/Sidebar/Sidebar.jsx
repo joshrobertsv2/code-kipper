@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { Container, Option } from './Sidebar.styles'
 import axios from 'axios'
+import { v4 as uuidv4 } from 'uuid'
 
 
 const Sidebar = () => {
@@ -25,7 +26,7 @@ const Sidebar = () => {
   return (
     <Container>
       {sideBarToggles.map((el, idx) => (
-        <Option active={location.pathname === sideBarUrls[idx]}key={idx} onClick={() => handleRedirect(el)}>{el}</Option>
+        <Option active={location.pathname === sideBarUrls[idx]}key={uuidv4()} onClick={() => handleRedirect(el)}>{el}</Option>
       ))}
     </Container>
   )

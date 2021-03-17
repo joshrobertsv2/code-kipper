@@ -1,14 +1,14 @@
 const languagesObj = {
-  javascript: 'javascript', 
-  css: 'css', 
-  markup: 'markup', 
-  grahpql: 'graphql', 
-  regex: 'regex',
-  'c++': 'cpp',
-  json: 'json', 
-  ruby: 'ruby', 
-  go: 'go', 
-  git: 'git',
+  Javascript: 'javascript', 
+  CSS: 'css', 
+  Markup: 'markup', 
+  GraphQL: 'graphql', 
+  REGEX: 'regex',
+  'C++': 'cpp',
+  JSON: 'json', 
+  Ruby: 'ruby', 
+  Golan: 'go', 
+  Git: 'git',
 }
 
 
