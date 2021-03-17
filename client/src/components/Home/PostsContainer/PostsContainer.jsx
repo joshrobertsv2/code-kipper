@@ -1,10 +1,13 @@
 import React from 'react'
 import axios from 'axios'
 import Code2 from '../../Code'
-import { Container, Post, Username, Likes, Description, Tag } from './PostsContainer.styles'
+import { Container, Post, Username, Likes, Description, Tag, Privacy, TagContainer, Language, BottomContainer } from './PostsContainer.styles'
 import { Switch, FormControlLabel, Chip } from '@material-ui/core/'
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditSharpIcon from '@material-ui/icons/EditSharp'
+import NoEncryptionIcon from '@material-ui/icons/NoEncryption'
+import PublicIcon from '@material-ui/icons/Public'
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { v4 as uuidv4 } from 'uuid'
 
 export default function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts}) {
@@ -41,36 +44,50 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
 
         <Code2 code={post.snippet} language={post?.language || ''}/>
 
-        <Likes><strong>Language: </strong>
+        <Language><strong>Language: </strong>
           {post.language ? 
             post.language.charAt(0).toUpperCase() + post.language.slice(1) : 
             'N/A'} 
-        </Likes>
+        </Language>
 
         <Description>
           {post?.description || ''}
         </Description>
 
-        <Likes>{post?.likes || '0'} likes</Likes>
-
         <Tag>Tags: </Tag>
+        <TagContainer>
         {post?.tags.map((tag) => (
           <Chip variant="outlined" key={uuidv4()} color="primary"
-          label={tag}/>
+          label={tag} size="medium"/>
         ))}
+        </TagContainer>
+        <BottomContainer>
+          <Likes><FavoriteIcon color="secondary" />{post?.likes || '0'} </Likes>
 
+          {post?.privacy ? privateIcon : publicIcon}
 
-        <FormControlLabel 
-          control={<Switch color="primary" checked={post?.private || false} />}
-          label={post.private? 'Private': 'Public'}
-          />
-
-
-        <DeleteIcon onClick={(e) => deletePost(idx, post._id)}/>
+          <DeleteIcon color="error" onClick={(e) => deletePost(idx, post._id)}/>
         
-        <EditSharpIcon onClick={(e) => editPost(idx)}/>
+          <EditSharpIcon onClick={(e) => editPost(idx)}/>
+        </BottomContainer>
+
+
       </Post>
     ), [])}
-</Container>
+  </Container>
   )
 }
+
+const privateIcon = (
+  <Privacy>
+    <NoEncryptionIcon />
+    Private
+  </Privacy>
+)
+
+const publicIcon = (
+  <Privacy>
+    <PublicIcon />
+    Public
+  </Privacy>
+)
