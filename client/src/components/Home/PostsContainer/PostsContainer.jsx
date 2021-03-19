@@ -1,16 +1,19 @@
 import React from 'react'
 import axios from 'axios'
 import Code2 from '../../Code'
-import { Container, Post, Username, Likes, Description, Tag, Privacy, TagContainer, Language, BottomContainer } from './PostsContainer.styles'
-import { Switch, FormControlLabel, Chip } from '@material-ui/core/'
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Container, Post, Username, Likes, Description, Tag, Privacy, TagContainer, Language, BottomContainer, CopiedText } from './PostsContainer.styles'
+import { Chip } from '@material-ui/core/'
+import DeleteIcon from '@material-ui/icons/Delete'
 import EditSharpIcon from '@material-ui/icons/EditSharp'
 import NoEncryptionIcon from '@material-ui/icons/NoEncryption'
 import PublicIcon from '@material-ui/icons/Public'
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { v4 as uuidv4 } from 'uuid'
 
 export default function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts}) {
+
+
   const deletePost = async (idx, post_id) => {
     //Delete post in state
     let newState = userPosts
@@ -36,10 +39,22 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
     await setOpenModal(true)
   }
 
+  const copySnippet = async (idx) => {
+    const snippet = userPosts[idx]?.snippet || 'undefined'
+
+    const clipboard = navigator.clipboard
+    clipboard.writeText(snippet)
+
+    const text = document.querySelector(`#post-${idx}-copied-text`)
+    text.style.visibility = 'visible'
+
+    setTimeout(() => text.style.visibility = 'hidden', 1500) 
+  }
+
   return (
     <Container modalOpen={modalOpen}>
-    {userPosts.length > 0 ? userPosts.reduceRight( (acc, post, idx) => acc.concat(
-      <Post key={uuidv4()} postId={post._id}>
+    {userPosts?.length > 0 ? userPosts.reduceRight( (acc, post, idx) => acc.concat(
+      <Post key={post._id} postId={post._id} id={`post-${idx}`}>
         <Username>Ashley Pean</Username>
 
         <Code2 code={post.snippet} language={post?.language || ''}/>
@@ -68,10 +83,12 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
 
           <DeleteIcon color="error" onClick={(e) => deletePost(idx, post._id)}/>
         
-          <EditSharpIcon onClick={(e) => editPost(idx)}/>
+          <EditSharpIcon id={`post-${idx}-copy`}onClick={(e) => editPost(idx)} />
+
+          <FileCopyIcon onClick={(e) => copySnippet(idx)} />
+          
         </BottomContainer>
-
-
+          <CopiedText id={`post-${idx}-copied-text`}>Copied!</CopiedText>
       </Post>
     ), []): 'No posts found'}
   </Container>

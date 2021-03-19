@@ -15,7 +15,9 @@ export const Post = styled.div`
   box-shadow: 5px 5px 15px 5px #A4A4A4;
   width: 80%;
   max-width: 600px;
-  padding: 1rem;`
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;`
 Post.displayName = 'Post'
 
 export const Username = styled.p`
@@ -65,3 +67,11 @@ export const BottomContainer = styled.div`
   justify-content: space-between;
   margin: .5rem 0;`
 BottomContainer.displayName = 'BottomContainer'
+
+export const CopiedText = styled.p`
+  visibility: hidden;
+  color: green;
+  font-size: 1.4rem;
+  text-align: right;;
+  margin: 0;`
+CopiedText.displayName = 'CopiedText'
