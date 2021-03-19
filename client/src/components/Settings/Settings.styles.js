@@ -5,10 +5,11 @@ export const Container = styled.div`
   grid-area: settings;
   display: flex;
   flex-direction: column;
-  gap: 1rem 0;
+  gap: .5rem 0;
   padding: 2rem 1rem;
   box-shadow: 5px 5px 15px 5px #A4A4A4;
-  border-radius: 6px;`
+  border-radius: 6px;
+  filter: ${props => props.modalOpen? 'blur(5px)' : 'blur(0px)'};`
 Container.displayName = 'SettingsContainer'
 
 export const Title = styled.h1`
@@ -44,7 +45,8 @@ export const EditButton = styled.button`
   align-self:center;
   display: inline;
   font-size: 1.2rem;
-  border-radius: 6px;`
+  border-radius: 6px;
+  outline: none;`
 EditButton.displayName = 'EditButton'
 
 export const DeleteAccount = styled.button`
@@ -56,6 +58,7 @@ export const DeleteAccount = styled.button`
   align-self:center;
   display: inline;
   font-size: 1.2rem;
-  border-radius: 6px;`
+  border-radius: 6px;
+  outline: none;`
 DeleteAccount.displayName = 'DeleteAccount' 
 

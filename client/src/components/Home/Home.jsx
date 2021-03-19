@@ -36,8 +36,8 @@ const Home = ({userId}) => {
     const fetchPosts = async () => {    
       const res = await axios.get(`/kipper/${userId}`)
       const newState = res.data.data
-      await changeUserPosts(newState)
-      setSearchResults(userPosts)
+      changeUserPosts(newState)
+      setSearchResults(newState)
     }
     fetchPosts()
   }, [])

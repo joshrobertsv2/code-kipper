@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Prism from "prismjs";
-import "prismjs/themes/prism-tomorrow.css";
+import axios from 'axios'
+
+import "prismjs/themes/prism-okaidia.css";
 
 export default function Code2({ code, language }) {
   const [formattedCode, setFormattedCode] = useState(code)
+  
 
   useEffect(() => {
     const generateCode = async () => {
       await setFormattedCode(code.replace(/\\n/g, '\n'))
+      // axios.get("prismjs/themes/prism-twilight.css")
       Prism.highlightAll()
+     
     }
     generateCode()
   }, [formattedCode]);

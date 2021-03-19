@@ -30,10 +30,6 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
     Prism.highlightElement(codeBlock.current)
   }, [userInput, isOpen])
 
-  useEffect(() => {
-    console.log('rerendered: ', userPosts)
-  }, [userPosts])
-
   const handleTagInput = async(e) => {
     await setTagText(e?.target.value || e.value)
 
@@ -78,7 +74,6 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
   }
 
   const updateSnippet = async () => {
-    console.log('updating', userInput)
     await axios.put('/kipper/604acd00433005638077804a', userInput)
     const updatedPost = userInput
 

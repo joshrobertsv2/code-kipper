@@ -19,15 +19,12 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
     let newState = userPosts
     newState.splice(idx, 1)
 
-    console.log(post_id)
-
     //Send a delete request to the server
     const res = await axios.delete(`/kipper/${userId}`, {data: {post_id}})
 
     if(res.data.doc.snippet) {
       await changeUserPosts([...newState])
     }else {
-      console.log('res')
       window.alert('Could not delete post. Please try again later.')
     }
   }

@@ -19,7 +19,6 @@ const Sidebar = () => {
   const sideBarUrls2 = ['', 'feed', 'logout']
   const history = useHistory()
   const location = useLocation()
-  console.log("path: ", location.pathname)
 
   const handleRedirect = (newLocation) => {
     newLocation = newLocation.toLowerCase()

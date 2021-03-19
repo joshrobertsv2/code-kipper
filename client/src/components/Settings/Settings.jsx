@@ -3,6 +3,7 @@ import * as styles from './Settings.styles'
 import Sidebar from '../Sidebar/Sidebar'
 import Sidecard from '../Sidecard/Sidecard'
 import { v4 as uuidv4 } from 'uuid'
+import Modal from './Modal/Modal'
 
 const Settings = ({userInfo, changeUserInfo}) => {
   const [modalOpen, toggleModal] = useState(false)
@@ -12,6 +13,7 @@ const Settings = ({userInfo, changeUserInfo}) => {
   AppStyles()
   return (
     <>
+      <Modal modalOpen={modalOpen} toggleModal={toggleModal} userInfo={userInfo} changeUserInfo={changeUserInfo}/>
       <Sidebar />
 
       <styles.Title modalOpen={modalOpen}>Code Kipper</styles.Title>
@@ -25,8 +27,9 @@ const Settings = ({userInfo, changeUserInfo}) => {
           </styles.SettingsOption>
         ))}
 
-        <styles.EditButton onClick={(e) =>  toggleModal(true)}>Edit Account Info</styles.EditButton>
         <styles.DeleteAccount>Delete Account</styles.DeleteAccount>
+        <styles.EditButton onClick={(e) =>  toggleModal(true)}>Edit Account Info</styles.EditButton>
+        
 
       </styles.Container>
 
