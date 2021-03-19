@@ -5,7 +5,6 @@ const LocalStrategy = require('passport-local').Strategy
 const passportLocal = new LocalStrategy(
   {usernameField:"email", passwordField:"password"},
   function(username, password, done) {
-    console.log(username, password)
     Users.findOne({ email: username }, function(err, user) {
       if (err) 
         return done(err)
@@ -20,7 +19,6 @@ const passportLocal = new LocalStrategy(
 )
 
 const serialize = passport.serializeUser(function(user, done) {
-  console.log('serialize')
   done(null, user.id);
 });
 
