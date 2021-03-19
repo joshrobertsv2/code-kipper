@@ -38,7 +38,7 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
 
   return (
     <Container modalOpen={modalOpen}>
-    {userPosts.reduceRight( (acc, post, idx) => acc.concat(
+    {userPosts.length > 0 ? userPosts.reduceRight( (acc, post, idx) => acc.concat(
       <Post key={uuidv4()} postId={post._id}>
         <Username>Ashley Pean</Username>
 
@@ -73,7 +73,7 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
 
 
       </Post>
-    ), [])}
+    ), []): 'No posts found'}
   </Container>
   )
 }

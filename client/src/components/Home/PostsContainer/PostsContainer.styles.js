@@ -37,7 +37,8 @@ export const Language = styled.p`
 Language.displayName = 'Language'
 
 export const Description = styled.p`
-  font-size: 1.3rem;`
+  font-size: 1.3rem;
+  color: gray;`
 Description.displayName = 'Description'
 
 export const Tag = styled.span`
