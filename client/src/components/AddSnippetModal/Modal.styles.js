@@ -7,15 +7,16 @@ export const Container = styled.form`
   height: 750px;
   width: 60%;
   max-width: 800px;
-  background: #25284C;
+  background: #141732;
   position: fixed; 
   padding: 3rem 2rem;
   box-sizing: border-box;
   top: 30%;
-  left: 20%;
+  left: 35%;
   font-family: Lato;
   overflow-y: scroll;
-  overflow-x: hidden;`
+  overflow-x: hidden;
+  color: white;`
 Container.displayName = 'Container'
 
 
@@ -56,7 +57,9 @@ export const Description = styled.textarea`
   min-width: 300px;
   min-height: 100px;
   outline: none;
-  resize: none;`
+  resize: none;
+  background: black;
+  color: white;`
 Description.displayName = 'Description'
 
 
@@ -78,7 +81,8 @@ Label.displayName = 'Label'
 
 export const Input = styled.input`
   min-height: 25px;
-  margin: .5rem 0 1rem 0; `
+  margin: .5rem 0 1rem 0;
+  outline: none; `
 Input.displayName = 'Input'
 
 

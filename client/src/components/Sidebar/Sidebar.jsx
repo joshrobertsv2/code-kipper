@@ -8,6 +8,8 @@ import DynamicFeedIcon from '@material-ui/icons/DynamicFeed'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Logo from '../../images/codekipper-logo.png'
+import svgLogo from '../../images/codekipper-logo-full.svg'
+import svgLogo2 from '../../images/codekipper-logo.svg'
 
 
 const Sidebar = () => {
@@ -17,6 +19,7 @@ const Sidebar = () => {
   const sideBarUrls2 = ['', 'feed', 'logout']
   const history = useHistory()
   const location = useLocation()
+  console.log("path: ", location.pathname)
 
   const handleRedirect = (newLocation) => {
     newLocation = newLocation.toLowerCase()
@@ -34,7 +37,7 @@ const Sidebar = () => {
     <styles.Container>
       <styles.MainLogo src={Logo} />
       {sideBarIcons.map((el, idx) => (
-        <styles.Option active={location.pathname === `/${sideBarUrls[idx]}`}key={uuidv4()} onClick={() => handleRedirect(sideBarUrls[idx])}>{el}</styles.Option>
+        <styles.Option active={location.pathname === `/${sideBarUrls2[idx]}`}key={uuidv4()} onClick={() => handleRedirect(sideBarUrls2[idx])}>{el}</styles.Option>
       ))}
     </styles.Container>
   )

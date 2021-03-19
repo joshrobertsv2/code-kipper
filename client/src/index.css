@@ -5,9 +5,11 @@ html, body {
 }
 
 div#root {
-  min-height: 100%;
   height: auto;
+  min-height: 100%;
   width: 100%;
   margin: 0;
-  background: beige;
+  background: #25284C;
+  font-family: 'Noto Sans', sans-serif;
+  color: white;
 }

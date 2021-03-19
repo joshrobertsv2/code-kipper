@@ -64,7 +64,7 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
         <BottomContainer>
           <Likes><FavoriteIcon color="secondary" />{post?.likes || '0'} </Likes>
 
-          {post?.privacy ? privateIcon : publicIcon}
+          {post?.public ? publicIcon : privateIcon}
 
           <DeleteIcon color="error" onClick={(e) => deletePost(idx, post._id)}/>
         

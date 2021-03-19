@@ -13,7 +13,7 @@ const dummyData = {
   post_id: '', 
   timestamp: '', 
   snippet: 'test', 
-  private: false,
+  public: false,
   description: '', 
   language: '', 
   _id: 'kasjd;fkajsdf;lkajsd'
@@ -29,7 +29,7 @@ const Home = ({userId}) => {
     '/feed': 'Feed',
   }
 
-  console.log(location.pathname)
+  console.log("path: ", location.pathname)
 
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const Home = ({userId}) => {
       <PostsContainer setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} modalOpen={modalOpen} userId={userId} userPosts={userPosts} changeUserPosts={changeUserPosts}/>
 
       <styles.Sidecard>
-        <styles.Button onClick={() => setOpenModal(true)}>+</styles.Button>
+        <styles.Button onClick={() => setOpenModal(true)}>Create a snippet</styles.Button>
       </styles.Sidecard>
     </>
   )
