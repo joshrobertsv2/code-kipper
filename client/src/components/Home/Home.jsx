@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Title, Sidecard,Button } from './Home.styles'
+import { useLocation} from 'react-router-dom'
+import * as styles from './Home.styles'
 import Sidebar from '../Sidebar/Sidebar'
 import Modal from '../AddSnippetModal/Modal'
 import PostsContainer from './PostsContainer/PostsContainer'
+import NotificationsIcon from '@material-ui/icons/Notifications'
 import axios from 'axios'
 
 const dummyData = {
@@ -20,8 +22,14 @@ const dummyData = {
 const Home = ({userId}) => {
   const [modalOpen, setOpenModal] = useState(false)
   const [editDetails, setEditDetails] = useState(null)
-
   const [userPosts, changeUserPosts] = useState([dummyData])
+  const location = useLocation()
+  const currentTabOpts = {
+    '/': 'Dashboard', 
+    '/feed': 'Feed',
+  }
+
+  console.log(location.pathname)
 
 
   useEffect(() => {
@@ -41,16 +49,24 @@ const Home = ({userId}) => {
     <>
       {modalOpen? <Modal isOpen={modalOpen} changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} changeUserPosts={changeUserPosts} userId={userId}/> : null }
       
-
-      <Title modalOpen={modalOpen}>Code Kipper</Title>
+      <styles.Header>
+        <styles.CurrentTab>{currentTabOpts[location.pathname]}</styles.CurrentTab>
+        <styles.SearchBar placeholder="Search here"></styles.SearchBar>
+        <styles.Title modalOpen={modalOpen}>CodeKipper</styles.Title>
+        <styles.IconsContainer>
+          <NotificationsIcon fontSize="large"/>
+          <styles.Profile>A</styles.Profile>
+        </styles.IconsContainer>
+      </styles.Header>
+      
 
       <Sidebar modalOpen={modalOpen} />
  
       <PostsContainer setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} modalOpen={modalOpen} userId={userId} userPosts={userPosts} changeUserPosts={changeUserPosts}/>
 
-      <Sidecard>
-        <Button onClick={() => setOpenModal(true)}>+</Button>
-      </Sidecard>
+      <styles.Sidecard>
+        <styles.Button onClick={() => setOpenModal(true)}>+</styles.Button>
+      </styles.Sidecard>
     </>
   )
 }
@@ -61,13 +77,13 @@ const AppStyles = () => {
 
   app.style.display = 'grid'
   app.style.gridTemplateRows = '.5fr 1fr 1fr 1fr 1fr'
-  app.style.gridTemplateColumns = '1fr 1fr 1fr 1fr '
+  app.style.gridTemplateColumns = '.25fr 1fr 1fr 1fr 1fr '
   app.style.gridTemplateAreas = `
-  "header header header header"
-  "sidebar home home sidecard" 
-  "sidebar home home sidecard" 
-  ". home home ." 
-  ". home home ."  `
+  "sidebar header header header header"
+  "sidebar . home home sidecard" 
+  "sidebar . home home sidecard" 
+  "sidebar . home home ." 
+  "sidebar . home home ."  `
 }
 
 export default Home
