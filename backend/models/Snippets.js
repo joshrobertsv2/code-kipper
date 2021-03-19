@@ -24,7 +24,7 @@ const SnippetsSchema = new mongoose.Schema({
     type: Array, 
     default: []
   },
-  private: {
+  public: {
     type: Boolean
   }, 
   description: {
