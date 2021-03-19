@@ -19,7 +19,7 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
   const [tagText, setTagText] = useState('')
   const [userInput, changeUserInput] = useState(editDetails?.snippet ? {...editDetails} : {
     user_id: userId,
-    tags: [''], 
+    tags: [], 
     private: true, 
     language: '', 
     description: '',

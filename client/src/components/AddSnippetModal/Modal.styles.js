@@ -7,7 +7,7 @@ export const Container = styled.form`
   height: 750px;
   width: 60%;
   max-width: 800px;
-  background: white;
+  background: #25284C;
   position: fixed; 
   padding: 3rem 2rem;
   box-sizing: border-box;
