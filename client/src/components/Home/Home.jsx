@@ -6,6 +6,7 @@ import Modal from '../AddSnippetModal/Modal'
 import PostsContainer from './PostsContainer/PostsContainer'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import axios from 'axios'
+import Fuse from 'fuse.js'
 
 const dummyData = {
   likes: 0, 
@@ -22,6 +23,7 @@ const dummyData = {
 const Home = ({userId}) => {
   const [modalOpen, setOpenModal] = useState(false)
   const [editDetails, setEditDetails] = useState(null)
+  const [searchResults, setSearchResults ] = useState()
   const [userPosts, changeUserPosts] = useState([dummyData])
   const location = useLocation()
   const currentTabOpts = {
@@ -29,14 +31,13 @@ const Home = ({userId}) => {
     '/feed': 'Feed',
   }
 
-  console.log("path: ", location.pathname)
-
 
   useEffect(() => {
     const fetchPosts = async () => {    
       const res = await axios.get(`/kipper/${userId}`)
       const newState = res.data.data
       await changeUserPosts(newState)
+      setSearchResults(userPosts)
     }
     fetchPosts()
   }, [])
@@ -44,6 +45,23 @@ const Home = ({userId}) => {
   useEffect( () => {
     AppStyles()
   }, [])
+
+  const handleSearch = async (e) => {
+    const query = e.target.value
+
+    if(query === ' ' || query === '') {
+      setSearchResults(userPosts)
+    }else {
+      const options = {
+        findAllMatches: true,
+        keys: ['filename', 'tags', 'language', 'description', 'snippet'],
+      }
+      const fuse = new Fuse(userPosts, options)
+      const search = fuse.search(query)
+      const searchResults = search.map(el => el?.item)
+      setSearchResults(searchResults)
+    }    
+  }
   
   return (
     <>
@@ -51,7 +69,7 @@ const Home = ({userId}) => {
       
       <styles.Header>
         <styles.CurrentTab>{currentTabOpts[location.pathname]}</styles.CurrentTab>
-        <styles.SearchBar placeholder="Search here"></styles.SearchBar>
+        <styles.SearchBar placeholder="Search here" onChange={handleSearch}></styles.SearchBar>
         <styles.Title modalOpen={modalOpen}>CodeKipper</styles.Title>
         <styles.IconsContainer>
           <NotificationsIcon fontSize="large"/>
@@ -62,7 +80,7 @@ const Home = ({userId}) => {
 
       <Sidebar modalOpen={modalOpen} />
  
-      <PostsContainer setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} modalOpen={modalOpen} userId={userId} userPosts={userPosts} changeUserPosts={changeUserPosts}/>
+      <PostsContainer setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} modalOpen={modalOpen} userId={userId} userPosts={searchResults} changeUserPosts={changeUserPosts}/>
 
       <styles.Sidecard>
         <styles.Button onClick={() => setOpenModal(true)}>Create a snippet</styles.Button>
