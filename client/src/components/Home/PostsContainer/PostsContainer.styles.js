@@ -11,10 +11,11 @@ export const Container = styled.div`
 Container.displayName = 'PostsContainer'
 
 export const Post = styled.div`
-  border-radius: 6px;
-  box-shadow: 5px 5px 15px 5px #A4A4A4;
-  width: 80%;
-  max-width: 600px;
+  border-radius: 2px;
+  background:  #141732;
+  box-shadow: 5px 5px 15px 5px #000;
+  width: 100%;
+  max-width: 700px;
   padding: 1rem;
   display: flex;
   flex-direction: column;`

@@ -1,16 +1,15 @@
-import { useState,  useRef } from 'react'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Switch, Chip, Button, FormControlLabel, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core'
 import CancelIcon from '@material-ui/icons/Cancel';
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, TextArea, TagsContainer, Label, Input, Description, InnerContainer } from './Modal.styles'
+import { Container, TextArea, TagsContainer, Label, Input, Description } from './Modal.styles'
 import languagesObj from '../../utils/supportedLanguages'
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import CodeBlock from '../Code'
 
 const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts, theme }) => {
-  const codeBlock = useRef(' ')
   const classes = makeStyles(styles)
   const [tagText, setTagText] = useState('')
   const [userInput, changeUserInput] = useState(editDetails?.snippet ? {...editDetails} : {
@@ -66,7 +65,8 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
   const createSnippet = async () => {
     await axios.post(`/kipper/${userId}`, userInput)
     changeUserPosts(prev => [...prev, userInput])
-    changeIsOpen(false)  
+    changeIsOpen(false) 
+    setEditDetails(null) 
   }
 
   const updateSnippet = async () => {

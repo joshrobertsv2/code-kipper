@@ -8,14 +8,10 @@ import DynamicFeedIcon from '@material-ui/icons/DynamicFeed'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Logo from '../../images/codekipper-logo.png'
-import svgLogo from '../../images/codekipper-logo-full.svg'
-import svgLogo2 from '../../images/codekipper-logo.svg'
 
 
 const Sidebar = () => {
-  const sideBarToggles = ['Home', 'Profile', 'Feed', 'Settings', 'Logout']
   const sideBarIcons = [<HomeIcon />, <DynamicFeedIcon />, <SettingsIcon />, <ExitToAppIcon />]
-  const sideBarUrls = ['', 'profile', 'feed', 'settings', 'logout']
   const sideBarUrls2 = ['', 'feed', 'settings', 'logout']
   const history = useHistory()
   const location = useLocation()

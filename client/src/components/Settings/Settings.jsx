@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState } from 'react'
 import { useLocation} from 'react-router-dom'
 import * as styles from './Settings.styles'
 import Sidebar from '../Sidebar/Sidebar'
@@ -16,7 +16,6 @@ const Settings = ({userInfo, changeUserInfo}) => {
   const [modalOpen, toggleModal] = useState(false)
   const classes = makeStyles(materialStyles)()
   const settings = ['Name', 'Email', 'Password']
-  const themeOptions = [dark, coy, okaidia, twilight, tomorrow, solarizedlight]
   const themeOpts = {
     'Dark': dark, 
     'Coy': coy, 

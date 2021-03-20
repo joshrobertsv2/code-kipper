@@ -7,6 +7,7 @@ import Settings from './components/Settings/Settings'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {
+  // eslint-disable-next-line
   const [userId, changeUserId] = useState('604acd00433005638077804a')
   const [userInfo, changeUserInfo] = useState({
     Name: 'Ashley Pean', 

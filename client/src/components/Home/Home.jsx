@@ -41,6 +41,7 @@ const Home = ({userId, name, theme}) => {
       setSearchResults(newState)
     }
     fetchPosts()
+    // eslint-disable-next-line
   }, [])
 
   useEffect( () => {
@@ -95,7 +96,7 @@ const AppStyles = () => {
   app.height = 'auto'
 
   app.style.display = 'grid'
-  app.style.gridTemplateRows = '.5fr 1fr 1fr 1fr 1fr'
+  app.style.gridTemplateRows = '.25fr 1fr 1fr 1fr 1fr'
   app.style.gridTemplateColumns = '.25fr 1fr 1fr 1fr 1fr '
   app.style.gridTemplateAreas = `
   "sidebar header header header header"
