@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useLocation } from 'react-router-dom'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 import Home from './components/Home/Home'
@@ -15,7 +14,7 @@ function App() {
     Password: '**********',
     RealPassword: '', 
     Theme: '', 
-    Interests: [],
+    Interests: ['JavaScript', 'HTML', 'CSS', 'React', 'Golang'],
   })
 
   return (
