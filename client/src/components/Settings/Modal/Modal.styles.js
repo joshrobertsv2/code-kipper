@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+export const Container = styled.form`
   display: flex;
   border-radius: 6px;
   flex-direction: column;

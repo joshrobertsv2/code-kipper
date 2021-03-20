@@ -13,7 +13,7 @@ function App() {
     Email: 'pean.ashley@gmail.com', 
     Password: '**********',
     RealPassword: '', 
-    Theme: '', 
+    Theme: 'Tomorrow', 
     Interests: ['JavaScript', 'HTML', 'CSS', 'React', 'Golang'],
   })
 
@@ -25,7 +25,7 @@ function App() {
           <Route exact path = "/register" component={Register} />
           <Route exact path = "/feed" component={Feed}/>
           <Route exact path="/settings" render={() =>  <Settings userInfo={userInfo} changeUserInfo={changeUserInfo}/>} />
-          <Route exact path = "/" render={() => <Home userId={userId}/>} />
+          <Route exact path = "/" render={() => <Home userId={userId} name={userInfo.Name} theme={userInfo.Theme}/>} />
         </Switch>
       </Router>
     </>

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import * as styles from './Modal.styles'
 import { makeStyles } from '@material-ui/core/styles'
@@ -8,19 +8,22 @@ import Chip from '@material-ui/core/Chip'
 import { Button } from '@material-ui/core'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { v4 as uuidv4 } from 'uuid'
 
  const Modal = ({ modalOpen, toggleModal, userInfo, changeUserInfo }) => {
   const classStyles = makeStyles(extraStyles)()
-  const usernameRef = useRef()
-  const emailRef = useRef()
-  const password1Ref = useRef()
-  const password2Ref = useRef()
+  const usernameRef = useRef(userInfo.Name)
+  const emailRef = useRef(userInfo.Email)
+  const password1Ref = useRef(userInfo.Password)
+  const password2Ref = useRef(userInfo.Password)
   
   const [editState, changeEditState] = useState({
-    username: {value: '', disabled: true,}, 
-    email: {value: '', disabled: true,}, 
-    password1: {value: '', disabled: true,}, 
-    password2: {value: '', disabled: true,}
+    username: {value: userInfo.Name, disabled: true,}, 
+    email: {value: userInfo.Email, disabled: true,}, 
+    password1: {value: userInfo.Password, disabled: true,}, 
+    password2: {value: userInfo.Password, disabled: true,},
+    theme: userInfo.Theme,
+    interests: userInfo.Interests
   })
   const [interestsText, setInterestsText] = useState('')
 
@@ -46,6 +49,11 @@ import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-sy
     await changeEditState({...editState, [property]: {...editState[property],value: ref.current.value}})
   }
 
+  const changeTheme = async (e) => {
+    console.log(e.target.value)
+    await changeEditState({...editState, theme: e.target.value})
+  }
+
   const stopEditing = async () => {
     await changeEditState({
       username: {value: '', disabled: true,}, 
@@ -68,7 +76,7 @@ import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-sy
       const interestsArr = userInfo.Interests
       interestsArr.push(newInterestsText)
 
-      await changeUserInfo({...userInfo, Interests: interestsArr})
+      await changeEditState({...editState, interests: interestsArr})
 
       setInterestsText('')
       e.target.value = ''
@@ -78,55 +86,65 @@ import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-sy
   const deleteInterest = (idx) => {
     const newInterests = userInfo.Interests
     newInterests.splice(idx, 1) 
-    changeUserInfo({...userInfo, Interests: newInterests})
+    changeEditState({...editState, editState: newInterests})
   }
 
-  const updateSettings = async () => {
-
+  const updateSettings = async (e) => {
+    e.preventDefault()
+    console.log(editState)
+    await changeUserInfo({
+      ...userInfo, 
+      Name: editState.username.value, 
+      Password: editState.password1.value,
+      Email: editState.email.value, 
+      Theme: editState.theme,
+      interests: editState.interests
+    })
+    toggleModal(false)
   }
 
 
   const portal = ReactDOM.createPortal(
-    <styles.Container>
+    <styles.Container onSubmit={e => e.preventDefault()}>
       <CancelIcon color="error" className={classStyles.cancel} onClick={stopEditing}/>
 
       <styles.InputContainer>
         <styles.Label htmlFor="username">Username: </styles.Label>
-        <styles.InputField id="username" ref={usernameRef} disabled={editState.username.disabled} onChange={(e) => editValue('username', usernameRef)}/>
+        <styles.InputField id="username" ref={usernameRef} disabled={editState.username.disabled} onChange={(e) => editValue('username', usernameRef)} value={editState.username.value}/>
         <EditIcon className={classStyles.edit} onClick={(e) => toggleEditStatus('username')}/>
       </styles.InputContainer>
 
       <styles.InputContainer>
         <styles.Label htmlFor="email">Email: </styles.Label>
-        <styles.InputField type="email" id="email" ref={emailRef} disabled={editState.email.disabled} onChange={(e) => editValue('email', emailRef)}/>
+        <styles.InputField type="email" id="email" ref={emailRef} disabled={editState.email.disabled} onChange={(e) => editValue('email', emailRef)} value={editState.email.value}/>
         <EditIcon className={classStyles.edit} onClick={(e) => toggleEditStatus('email')}/>
       </styles.InputContainer>
 
       <styles.InputContainer>
         <styles.Label htmlFor="password1">Password: </styles.Label>
-        <styles.InputField type="password" id="password1" ref={password1Ref} disabled={editState.password1.disabled} onChange={(e) => editValue('password1', password1Ref)}/>
+        <styles.InputField type="password" id="password1" ref={password1Ref} disabled={editState.password1.disabled} onChange={(e) => editValue('password1', password1Ref)} value={editState.password1.value}/>
         <EditIcon className={classStyles.edit} onClick={(e) => toggleEditStatus('password')}/>
       </styles.InputContainer>
 
       <styles.InputContainer>
         <styles.Label htmlFor="password2">Confirm Password: </styles.Label>
-        <styles.InputField type="password" id="password2" ref={password2Ref} disabled={editState.password2.disabled} onChange={(e) => editValue('password2', password2Ref)}/>
+        <styles.InputField type="password" id="password2" ref={password2Ref} disabled={editState.password2.disabled} onChange={(e) => editValue('password2', password2Ref)} value={editState.password1.value}/>
       </styles.InputContainer>
 
-      <form>
-        <fieldset>
-          <legend>Choose a theme: </legend>
-          {themeStrings.map((currTheme, idx) => (
-            <styles.ThemeContainer>
-              <input type="radio" name="theme" id={currTheme} value={currTheme}/>
-              <label htmlFor={currTheme}>{currTheme}</label>
-              <SyntaxHighlighter language="javascript" style={themeOptions[idx]}>
-                {codeSnippet}
-              </SyntaxHighlighter>
-            </styles.ThemeContainer>
-          ))}
-        </fieldset>
-      </form>
+
+      <fieldset onChange={changeTheme} value={editState.theme}>
+        <legend>Choose a theme: </legend>
+        {themeStrings.map((currTheme, idx) => (
+          <styles.ThemeContainer key={uuidv4()}>
+            <input type="radio" name="theme" id={currTheme} value={currTheme} defaultChecked={editState.theme === currTheme}/>
+            <label htmlFor={currTheme}>{currTheme}</label>
+            <SyntaxHighlighter language="javascript" style={themeOptions[idx]}>
+              {codeSnippet}
+            </SyntaxHighlighter>
+          </styles.ThemeContainer>
+        ))}
+      </fieldset>
+
 
       
       <div style={extraStyles2.interests}>
@@ -137,14 +155,14 @@ import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-sy
 
         <div>
           {userInfo.Interests.map((el, idx) => (
-            <Chip label={el} color="primary" onDelete={(e) => deleteInterest(idx)} className={classStyles.chip}/>
+            <Chip key={uuidv4()} label={el} color="primary" onDelete={(e) => deleteInterest(idx)} className={classStyles.chip}/>
           ))}
         </div>
 
       </div>
 
       <Button className={classStyles.cancelChanges} onClick={stopEditing}>Cancel Changes</Button>
-      <Button className={classStyles.saveChanges} onClick={updateSettings}>Save Changes</Button>
+      <Button className={classStyles.saveChanges} type="submit" onClick={updateSettings}>Save Changes</Button>
     </styles.Container>
   , document.querySelector('#portal'))
 

@@ -20,7 +20,7 @@ const dummyData = {
   _id: 'kasjd;fkajsdf;lkajsd'
 }
 
-const Home = ({userId}) => {
+const Home = ({userId, name, theme}) => {
   const [modalOpen, setOpenModal] = useState(false)
   const [editDetails, setEditDetails] = useState(null)
   const [searchResults, setSearchResults ] = useState()
@@ -66,7 +66,7 @@ const Home = ({userId}) => {
   
   return (
     <>
-      {modalOpen? <Modal isOpen={modalOpen} changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} changeUserPosts={changeUserPosts} userId={userId}/> : null }
+      {modalOpen? <Modal isOpen={modalOpen} changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} changeUserPosts={changeUserPosts} userId={userId} theme={theme}/> : null }
       
       <styles.Header>
         <styles.CurrentTab>{currentTabOpts[location.pathname]}</styles.CurrentTab>
@@ -81,7 +81,7 @@ const Home = ({userId}) => {
 
       <Sidebar modalOpen={modalOpen} />
  
-      <PostsContainer setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} modalOpen={modalOpen} userId={userId} userPosts={searchResults} changeUserPosts={changeUserPosts}/>
+      <PostsContainer setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} modalOpen={modalOpen} userId={userId} userPosts={searchResults} changeUserPosts={changeUserPosts} username={name} theme={theme}/>
 
       <styles.Sidecard>
         <styles.Button onClick={() => setOpenModal(true)}>Create a snippet</styles.Button>

@@ -1,26 +1,35 @@
-import React, { useEffect, useState } from "react";
-import Prism from "prismjs";
-import axios from 'axios'
+import React from "react"
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
-import "prismjs/themes/prism-okaidia.css";
 
-export default function Code2({ code, language }) {
-  const [formattedCode, setFormattedCode] = useState(code)
-  
-
-  useEffect(() => {
-    const generateCode = async () => {
-      await setFormattedCode(code.replace(/\\n/g, '\n'))
-      // axios.get("prismjs/themes/prism-twilight.css")
-      Prism.highlightAll()
-     
-    }
-    generateCode()
-  }, [formattedCode]);
-
+const CodeBlock = ({ code, language, theme }) => {
+  const themeOpts = {
+    'Dark': dark, 
+    'Coy': coy, 
+    'Okaidia': okaidia, 
+    'Twilight': twilight, 
+    'Tomorrow': tomorrow, 
+    'Solarized Light': solarizedlight,
+  }
   return (
-    <pre>
-      <code className={`language-${language}`}>{formattedCode ||  'Error: "Error loading code, please try again "'} </code>
-    </pre>
+    <div style={styling}>
+      <SyntaxHighlighter language={language.toLowerCase()} style={themeOpts[theme]} showLineNumbers={true} wrapLines={true} wrapLongLines={true}>
+      {code}
+     </SyntaxHighlighter>
+    </div>
+
   );
 }
+
+const styling = {
+  height: 'auto',
+  minHeight: '6rem',
+  maxHeight: '12rem',
+  overflowY: 'auto',
+  margin: '1rem 0',
+}
+
+
+
+export default CodeBlock

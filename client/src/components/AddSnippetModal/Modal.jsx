@@ -1,18 +1,17 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState,  useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { Switch, Chip, Button, FormControlLabel, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core'
 import CancelIcon from '@material-ui/icons/Cancel';
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, TextArea, Code, Pre, TagsContainer, Label, Input, Description } from './Modal.styles'
-import Prism from 'prismjs'
-import "prismjs/themes/prism-tomorrow.css"
+import { Container, TextArea, TagsContainer, Label, Input, Description, InnerContainer } from './Modal.styles'
 import languagesObj from '../../utils/supportedLanguages'
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
+import CodeBlock from '../Code'
 
-const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts }) => {
+const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts, theme }) => {
   const codeBlock = useRef(' ')
-  const classes = makeStyles(styles)()
+  const classes = makeStyles(styles)
   const [tagText, setTagText] = useState('')
   const [userInput, changeUserInput] = useState(editDetails?.snippet ? {...editDetails} : {
     user_id: userId,
@@ -26,9 +25,6 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
     idx: 0
   })
 
-  useEffect(() => {
-    Prism.highlightElement(codeBlock.current)
-  }, [userInput, isOpen])
 
   const handleTagInput = async(e) => {
     await setTagText(e?.target.value || e.value)
@@ -100,9 +96,9 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
       {/* Select Language */}
       <FormControl>
         <InputLabel id="language" >Language</InputLabel>
-          <Select labelId="language" value={userInput?.language} onChange={selectLanguage} >
+          <Select labelId="language" value={userInput?.language || 'Javascript'} onChange={selectLanguage} >
             {Object.keys(languagesObj).map((language) => (
-              <MenuItem key={uuidv4()} value={language}>
+              <MenuItem key={uuidv4()} value={language} className={classes.languageInput}>
                 {language}
               </MenuItem>
             ))}
@@ -116,11 +112,8 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
       value={userInput?.snippet || undefined} />
 
       {/* code block */}
-      <Pre>
-       <Code ref={codeBlock} className={userInput?.language ? `language-${languagesObj[userInput.language]}`: 'language-js'}>
-         {userInput?.snippet || "const snippet = 'Insert text here'"}
-       </Code>
-     </Pre>
+
+      <CodeBlock code={userInput?.snippet || "const snippet = 'Insert text here'"} language={userInput?.language || 'javascript'} theme={theme}/>
 
       {/* description*/}
       <Label htmlFor="description">Description</Label>
@@ -173,6 +166,9 @@ const styles = () => {
     }, 
     chip: {
       fontSize: '1.2rem'
+    }, 
+    languageInput: {
+      color: 'white'
     }
   }
 }

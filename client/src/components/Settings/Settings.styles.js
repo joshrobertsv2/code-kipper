@@ -58,7 +58,8 @@ export const SettingsOptions = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 .5rem;
-  gap: 2rem;`
+  gap: 2rem;
+  margin: 0 0 10rem;`
 SettingsOptions.displayName = 'SettingsOptions'
 
 export const Property = styled.p`

@@ -1,7 +1,8 @@
 import React from 'react'
 import axios from 'axios'
-import Code2 from '../../Code'
+import CodeBlock from '../../Code'
 import { Container, Post, Username, Likes, Description, Tag, Privacy, TagContainer, Language, BottomContainer, CopiedText } from './PostsContainer.styles'
+import { makeStyles } from '@material-ui/core/styles'
 import { Chip } from '@material-ui/core/'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditSharpIcon from '@material-ui/icons/EditSharp'
@@ -11,8 +12,8 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { v4 as uuidv4 } from 'uuid'
 
-export default function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts}) {
-
+export default function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, theme}) {
+  const classes = makeStyles(materialStyles)()
 
   const deletePost = async (idx, post_id) => {
     //Delete post in state
@@ -52,9 +53,9 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
     <Container modalOpen={modalOpen}>
     {userPosts?.length > 0 ? userPosts.reduceRight( (acc, post, idx) => acc.concat(
       <Post key={post._id} postId={post._id} id={`post-${idx}`}>
-        <Username>Ashley Pean</Username>
+        <Username>{username}</Username>
 
-        <Code2 code={post.snippet} language={post?.language || ''}/>
+        <CodeBlock code={post.snippet} language={post?.language || ''} theme={theme}/>
 
         <Language><strong>Language: </strong>
           {post.language ? 
@@ -69,7 +70,7 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
         <Tag>Tags: </Tag>
         <TagContainer>
         {post?.tags.map((tag) => (
-          <Chip variant="outlined" key={uuidv4()} color="primary"
+          <Chip variant="outlined" key={uuidv4()} className={classes.chip}
           label={tag} size="medium"/>
         ))}
         </TagContainer>
@@ -92,6 +93,13 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
   )
 }
 
+const materialStyles = {
+  chip: {
+    color: 'white', 
+    border: '1px solid white',
+    fontSize: '1rem',
+  }
+}
 const privateIcon = (
   <Privacy>
     <NoEncryptionIcon />

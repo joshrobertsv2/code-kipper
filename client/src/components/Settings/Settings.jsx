@@ -5,18 +5,26 @@ import Sidebar from '../Sidebar/Sidebar'
 import Sidecard from '../Sidecard/Sidecard'
 import { v4 as uuidv4 } from 'uuid'
 import Modal from './Modal/Modal'
+import { makeStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 
 const Settings = ({userInfo, changeUserInfo}) => {
-  const [modalOpen, toggleModal] = useState(true)
-
+  const [modalOpen, toggleModal] = useState(false)
+  const classes = makeStyles(materialStyles)()
   const settings = ['Name', 'Email', 'Password']
   const themeOptions = [dark, coy, okaidia, twilight, tomorrow, solarizedlight]
-  const themeStrings = ['Dark', 'Coy', 'Okaidia', 'Twilight', 'Tomorrow', 'Solarized Light']
+  const themeOpts = {
+    'Dark': dark, 
+    'Coy': coy, 
+    'Okaida': okaidia, 
+    'Twilight': twilight, 
+    'Tomorrow': tomorrow, 
+    'Solarized Light': solarizedlight,
+  }
   const location = useLocation()
   const currentTabOpts = {
     '/': 'Dashboard', 
@@ -41,7 +49,7 @@ const Settings = ({userInfo, changeUserInfo}) => {
       <styles.Container modalOpen={modalOpen}>
         <styles.SettingsOptions key={uuidv4()}>
           {settings.map((setting) => (
-            <div>
+            <div key={uuidv4()}>
               <styles.Property>{`${setting}:`}</styles.Property>
               <styles.Value>{userInfo[setting]}</styles.Value>
             </div>
@@ -50,8 +58,8 @@ const Settings = ({userInfo, changeUserInfo}) => {
         <div>
           <styles.Property style={{alignSelf: 'center'}}>Theme: </styles.Property>
           <styles.ThemeContainer>
-            <styles.Value>Okaidia</styles.Value>
-            <SyntaxHighlighter language="javascript" style={okaidia}>
+            <styles.Value>{userInfo.Theme}</styles.Value>
+            <SyntaxHighlighter language="javascript" style={themeOpts[userInfo.Theme]}>
               const hello = 'hello'
             </SyntaxHighlighter>
           </styles.ThemeContainer>
@@ -59,11 +67,11 @@ const Settings = ({userInfo, changeUserInfo}) => {
 
         <div>
           <styles.Property>Interests: </styles.Property>
-          <styles.Value style={interestsStyles}>
+          <div style={interestsStyles}>
             {userInfo.Interests.map(el => (
-              <Chip label={el} onClick={() => "click"}/>
+              <Chip key={uuidv4()}label={el} className={classes.chip}/>
             ))}
-          </styles.Value>
+          </div>
         </div>
         </styles.SettingsOptions>
 
@@ -86,6 +94,13 @@ const interestsStyles = {
   flexWrap: 'wrap',
 }
 
+const materialStyles = {
+  chip: {
+    fontSize: '1.2rem'
+  }
+}
+
+
 const AppStyles = () => {
   const app = document.querySelector('#root')
   app.height = 'auto'
@@ -102,21 +117,3 @@ const AppStyles = () => {
 }
 
 export default Settings
-
-
-const themeCreator = (themeOptions, themeStrings) => (
-  <form>
-  <fieldset>
-    <legend>Choose a theme: </legend>
-    {themeOptions.map((theme, idx) => (
-      <div>
-        <input type="radio" name="theme" id={theme}/>
-        <label htmlFor={theme}>{themeStrings[idx]}</label>
-        <SyntaxHighlighter language="javascript" style={theme}>
-        const hello = 'hello'
-        </SyntaxHighlighter>
-      </div>
-    ))}
-  </fieldset>
-</form>
-)
