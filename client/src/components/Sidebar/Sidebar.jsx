@@ -14,9 +14,9 @@ import svgLogo2 from '../../images/codekipper-logo.svg'
 
 const Sidebar = () => {
   const sideBarToggles = ['Home', 'Profile', 'Feed', 'Settings', 'Logout']
-  const sideBarIcons = [<HomeIcon />, <DynamicFeedIcon />, <ExitToAppIcon />]
+  const sideBarIcons = [<HomeIcon />, <DynamicFeedIcon />, <SettingsIcon />, <ExitToAppIcon />]
   const sideBarUrls = ['', 'profile', 'feed', 'settings', 'logout']
-  const sideBarUrls2 = ['', 'feed', 'logout']
+  const sideBarUrls2 = ['', 'feed', 'settings', 'logout']
   const history = useHistory()
   const location = useLocation()
 
