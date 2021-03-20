@@ -29,6 +29,7 @@ const Home = ({userId}) => {
   const currentTabOpts = {
     '/': 'Dashboard', 
     '/feed': 'Feed',
+    '/settings': 'Settings'
   }
 
 

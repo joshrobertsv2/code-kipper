@@ -7,7 +7,8 @@ export const Header = styled.div`
   align-items: center;
   grid-area: header;
   padding: 0 2rem;
-  color: white;`
+  color: white;
+  filter: ${props => props.modalOpen? 'blur(5px)': 'blur(0px)'};`
 Header.displayName = 'Header'
 
 export const CurrentTab = styled.h1`
