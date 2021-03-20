@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { Switch, Chip, Button, FormControlLabel, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core'
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -9,20 +9,27 @@ import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import CodeBlock from '../Code'
 
-const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts, theme }) => {
+const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts, theme, setSearchResults }) => {
   const classes = makeStyles(styles)
   const [tagText, setTagText] = useState('')
   const [userInput, changeUserInput] = useState(editDetails?.snippet ? {...editDetails} : {
     user_id: userId,
     tags: [], 
     public: true, 
-    language: '', 
+    language: 'Javascript', 
     description: '',
     snippet: "",
-    _id: '', 
+    _id: userId, 
     filename: '', 
-    idx: 0
+    idx: 0, 
+    createdAt: '', 
+    updatedAt: '', 
+    _v: ''
   })
+
+  useEffect(() => {
+    console.log('modal: ', userPosts)
+  }, [userPosts])
 
 
   const handleTagInput = async(e) => {
@@ -63,23 +70,31 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
   }
 
   const createSnippet = async () => {
+    console.log('create')
+    console.log(userInput)
     await axios.post(`/kipper/${userId}`, userInput)
-    changeUserPosts(prev => [...prev, userInput])
-    changeIsOpen(false) 
+    changeUserPosts([...userPosts, userInput])
+    setSearchResults([...userPosts, userInput])
+
     setEditDetails(null) 
+    changeIsOpen(false) 
   }
 
   const updateSnippet = async () => {
+    console.log('update')
+    console.log(userInput)
     await axios.put('/kipper/604acd00433005638077804a', userInput)
     const updatedPost = userInput
 
     const newPostsArr = userPosts
     newPostsArr[userInput.idx] = updatedPost
 
-    await changeUserPosts([...newPostsArr])
+    await changeUserPosts(newPostsArr)
+    setSearchResults(newPostsArr)
+    console.log(userPosts)
 
-    changeIsOpen(false)
     setEditDetails(null)
+    changeIsOpen(false)
   }
 
   const closeModal = (e) => {

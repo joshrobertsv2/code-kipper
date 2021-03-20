@@ -7,9 +7,13 @@ const languagesObj = {
   'C++': 'cpp',
   JSON: 'json', 
   Ruby: 'ruby', 
-  Golan: 'go', 
+  Golang: 'go', 
   Git: 'git',
+  'React JSX': 'jsx',
+  'React TSX': 'tsx'
 }
+
+
 
 
 module.exports = languagesObj

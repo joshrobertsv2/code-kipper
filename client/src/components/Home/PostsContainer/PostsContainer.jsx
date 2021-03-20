@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import CodeBlock from '../../Code'
 import { Container, Post, Username, Likes, Description, Tag, Privacy, TagContainer, Language, BottomContainer, CopiedText } from './PostsContainer.styles'
@@ -14,6 +14,10 @@ import { v4 as uuidv4 } from 'uuid'
 
 export default function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, theme}) {
   const classes = makeStyles(materialStyles)()
+
+  useEffect(() => {
+    console.log('post container: ', userPosts)
+  }, [userPosts])
 
   const deletePost = async (idx, post_id) => {
     //Delete post in state
@@ -52,7 +56,7 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
   return (
     <Container modalOpen={modalOpen}>
     {userPosts?.length > 0 ? userPosts.reduceRight( (acc, post, idx) => acc.concat(
-      <Post key={post._id} postId={post._id} id={`post-${idx}`}>
+      <Post key={uuidv4()} postId={post._id} id={`post-${idx}`}>
         <Username>{username}</Username>
 
         <CodeBlock code={post.snippet} language={post?.language || ''} theme={theme}/>

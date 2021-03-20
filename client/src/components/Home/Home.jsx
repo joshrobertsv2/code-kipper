@@ -8,6 +8,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import axios from 'axios'
 import Fuse from 'fuse.js'
 
+
+//TODO : 
 const dummyData = {
   likes: 0, 
   tags: [''], 
@@ -31,6 +33,10 @@ const Home = ({userId, name, theme}) => {
     '/feed': 'Feed',
     '/settings': 'Settings'
   }
+
+  useEffect(() => {
+    console.log('home component: ', userPosts)
+  }, [userPosts])
 
 
   useEffect(() => {
@@ -67,7 +73,7 @@ const Home = ({userId, name, theme}) => {
   
   return (
     <>
-      {modalOpen? <Modal isOpen={modalOpen} changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} changeUserPosts={changeUserPosts} userId={userId} theme={theme}/> : null }
+      {modalOpen? <Modal isOpen={modalOpen} changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} changeUserPosts={changeUserPosts} userId={userId} theme={theme} setSearchResults={setSearchResults}/> : null }
       
       <styles.Header>
         <styles.CurrentTab>{currentTabOpts[location.pathname]}</styles.CurrentTab>
