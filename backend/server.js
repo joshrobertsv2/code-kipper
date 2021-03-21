@@ -4,13 +4,15 @@ const cors = require('cors')
 const passport = require('passport')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')
 const mongoose = require('mongoose')
+
 
 /* GENERAL SETUP */
 require('dotenv').config()
 
 const app = express()
-const PORT = 3002 || process.env.PORT
+const PORT = 3001 || process.env.PORT
 
 /* DATABASE CONFIG */
 mongoose.connect(
@@ -23,12 +25,19 @@ const db = mongoose.connection
 //MIDDLEWARE
 app.use(express.json())
 app.use(cors())
+app.use(cookieParser(process.env.SECRET_KEY))
 app.use(session({
-  secret: 'secretcode', 
+  secret: process.env.SECRET_KEY, 
   resave: true, 
-  saveUninitialized: true
+  saveUninitialized: true, 
+  cookie: { 
+    path: '/', 
+    httpOnly: true, 
+    secure: false, 
+    maxAge: 5.184E+8 //6 days 
+  },
 }))
-app.use(cookieParser("secretcode"))
+
 
 
 /* PASSPORT SETUP */
@@ -37,8 +46,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 passport.use(passportLocal)
 
-/* ROUTES */
 
+/* ROUTES */
 app.use('/login', require('./routes/login'))
 app.use('/logout', require('./routes/logout'))
 app.use('/register', require('./routes/register'))

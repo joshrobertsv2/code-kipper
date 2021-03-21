@@ -35,7 +35,7 @@ kipperController.editSnippet = async (req, res) => {
     const doc = await Snippets.findOneAndUpdate(
       {user_id, _id: post_id},
       { snippet, likes, tags, public, description, language}, 
-      {new: true}
+      {new: true, useFindAndModify: true}
     )
     res.status(200).send({message: 'success', doc})
   }catch(err) {
@@ -47,7 +47,7 @@ kipperController.deletePost = async (req, res) => {
   const { post_id } = req.body
   const { user_id} = req.params
   try {
-    const doc = await Snippets.findOneAndDelete({_id: post_id, user_id })
+    const doc = await Snippets.findOneAndDelete({_id: post_id, user_id }, {useFindAndModify: true})
     res.status(200).send({message: 'success', doc})
   }catch(err) {
     res.status(500).send({message: 'failed', err})

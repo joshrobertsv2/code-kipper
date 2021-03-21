@@ -19,6 +19,13 @@ const UsersSchema = new mongoose.Schema({
     type: String, 
     required: true
   }, 
+  interests: {
+    type: Array,
+  }, 
+  theme: {
+    type: String,
+  }
+
 }, options)
 
 module.exports = mongoose.model('Users', UsersSchema)
