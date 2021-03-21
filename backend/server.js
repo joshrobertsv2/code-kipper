@@ -25,18 +25,19 @@ const db = mongoose.connection
 //MIDDLEWARE
 app.use(express.json())
 app.use(cors())
-app.use(cookieParser(process.env.SECRET_KEY))
+
 app.use(session({
   secret: process.env.SECRET_KEY, 
-  resave: true, 
+  resave: false, 
   saveUninitialized: true, 
   cookie: { 
-    path: '/', 
     httpOnly: true, 
     secure: false, 
     maxAge: 5.184E+8 //6 days 
   },
 }))
+
+app.use(cookieParser(process.env.SECRET_KEY))
 
 
 

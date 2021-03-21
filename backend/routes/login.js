@@ -5,7 +5,7 @@ const passport = require('passport')
 const loginController = require('../controllers/loginController')
 
 router.post('/', 
-  passport.authenticate('local'), 
+  passport.authenticate('local', {failureRedirect: '/login'}), 
   loginController.sendResponse
 )
 

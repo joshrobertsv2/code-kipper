@@ -20,6 +20,8 @@ kipperController.addCodeSnippet = async (req, res) => {
 kipperController.getUserSnippets = (req, res) => {
   const { user_id } = req.params
 
+  console.log(req.isAuthenticated())
+  
   Snippets.find({user_id}, (err, data) => {
     if(err) res.status(500).send({message: 'failed', err})
 
@@ -30,7 +32,7 @@ kipperController.getUserSnippets = (req, res) => {
 kipperController.editSnippet = async (req, res) => {
   const { user_id, _id, snippet, likes = 0, tags, public, description, language } = req.body
   const post_id = _id
-
+  
   try{
     const doc = await Snippets.findOneAndUpdate(
       {user_id, _id: post_id},

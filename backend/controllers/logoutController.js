@@ -4,11 +4,9 @@ const logoutController = {}
 
 
 logoutController.logout = (req, res) => {
-  req.session.destroy(() => {
-    res.clearCookie('connect.sid')
-    res.redirect('/');
-  })
-  
+  req.logOut()
+  res.redirect('/login')
+  console.log('done')
 }
 
 module.exports = logoutController
