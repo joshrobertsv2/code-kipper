@@ -1,19 +1,20 @@
 import axios from 'axios'
 
-
 const API = {}
 
-API.login = async (user) => {
+API.register = async (user) => {
   try {
-    const response = await axios.post('/login', {
+    const response = await axios.post('/register', {
+      name: user.name, 
       email: user.email, 
-      password: user.password
+      password: user.password,
     })
     return response
-  }catch(err){
+  }catch(err) {
     return err
   }
 }
+
 
 API.redirect = async () => {
   try{ 
@@ -23,4 +24,5 @@ API.redirect = async () => {
   }
 }
 
-export default API 
+
+export default API

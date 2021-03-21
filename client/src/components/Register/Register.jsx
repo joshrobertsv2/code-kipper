@@ -1,23 +1,21 @@
 import React, { useRef } from 'react'
-import { useHistory } from 'react-router-dom'
 import { Container, FormInput, SubmitButton, Label, Title, RegisterText } from './Register.styles'
-import axios from 'axios'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions/actions'
 
 
-const Register = () => {
+const Register = ({registerUser}) => {
   const nameInput = useRef(), emailInput = useRef(), confirmPasswordInput = useRef(), passwordInput = useRef()
-  const history = useHistory()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const passwordsMatch = confirmPassword()
     if(passwordsMatch) {
-      const response = await axios.post('/register', { 
+      registerUser({
         name: nameInput.current.value, 
         email: emailInput.current.value, 
-        password: passwordInput.current.value 
+        password: passwordInput.current.value
       })
-      response.status === 200 ? history.push('/') : window.alert('Error registering user')
     }
   }
 
@@ -28,7 +26,7 @@ const Register = () => {
       passwordInput.current.value = ''
       confirmPasswordInput.current.value = ''
     }
-    return password1 === password2
+    else return password1 === password2
   }
 
   return (
@@ -54,4 +52,8 @@ const Register = () => {
   )
 }
 
-export default Register
+const mapDispatchToProps = (dispatch) => ({
+  registerUser: user => dispatch(actions.registerUser(user))
+})
+
+export default connect(null, mapDispatchToProps)(Register)
