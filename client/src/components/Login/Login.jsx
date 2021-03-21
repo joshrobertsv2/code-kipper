@@ -7,7 +7,6 @@ const Login = () => {
   const emailInput = useRef()
   const passwordInput = useRef()
   const history = useHistory()
-  setAppStyles()
   
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -35,14 +34,6 @@ const Login = () => {
       <RegisterText>Not registered? <a href="/register">Create an account</a></RegisterText>
     </Container>
   )
-}
-
-const setAppStyles = () => {
-  const app = document.querySelector('#root')
-
-  app.style.display = 'flex'
-  app.style.justifyContent = 'center'
-  app.style.alignItems = 'center'
 }
 
 export default Login

@@ -50,10 +50,6 @@ const Home = ({userId, name, theme}) => {
     // eslint-disable-next-line
   }, [])
 
-  useEffect( () => {
-    AppStyles()
-  }, [])
-
   const handleSearch = async (e) => {
     const query = e.target.value
 
@@ -95,21 +91,6 @@ const Home = ({userId, name, theme}) => {
       </styles.Sidecard>
     </>
   )
-}
-
-const AppStyles = () => {
-  const app = document.querySelector('#root')
-  app.height = 'auto'
-
-  app.style.display = 'grid'
-  app.style.gridTemplateRows = '.25fr 1fr 1fr 1fr 1fr'
-  app.style.gridTemplateColumns = '.25fr 1fr 1fr 1fr 1fr '
-  app.style.gridTemplateAreas = `
-  "sidebar header header header header"
-  "sidebar . home home sidecard" 
-  "sidebar . home home sidecard" 
-  "sidebar . home home ." 
-  "sidebar . home home ."  `
 }
 
 export default Home

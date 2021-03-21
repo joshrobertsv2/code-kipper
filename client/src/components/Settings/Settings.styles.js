@@ -45,7 +45,7 @@ export const Profile = styled.p`
 Profile.displayName = 'ProfileCircle'
 
 export const Container = styled.div`
-  grid-area: settings;
+  grid-area: content;
   display: flex;
   flex-direction: column;
   gap: .5rem 0;

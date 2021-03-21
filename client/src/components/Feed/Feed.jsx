@@ -5,7 +5,6 @@ import Sidebar from '../Sidebar/Sidebar'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 
 const Feed = () => {
-  AppStyles()
   const location = useLocation()
   const currentTabOpts = {
     '/': 'Dashboard', 
@@ -28,21 +27,6 @@ const Feed = () => {
       </styles.Container>
     </>
   )
-}
-
-const AppStyles = () => {
-  const app = document.querySelector('#root')
-  app.height = 'auto'
-
-  app.style.display = 'grid'
-  app.style.gridTemplateRows = '.5fr 1fr 1fr 1fr 1fr'
-  app.style.gridTemplateColumns = '.25fr 1fr 1fr 1fr 1fr '
-  app.style.gridTemplateAreas = `
-  "sidebar header header header header"
-  "sidebar . feed feed sidecard" 
-  "sidebar . feed feed sidecard" 
-  "sidebar . feed feed ." 
-  "sidebar . feed feed ."  `
 }
 
 export default Feed

@@ -12,4 +12,14 @@ div#root {
   background: #25284C;
   font-family: 'Noto Sans', sans-serif;
   color: white;
+  height: auto;
+  display: grid;
+  grid-template-rows: .25fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: .15fr 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+  "sidebar header header header header"
+  "sidebar . content content sidecard" 
+  "sidebar . content content sidecard" 
+  "sidebar . content content ." 
+  "sidebar . content content ."
 }

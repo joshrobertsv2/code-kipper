@@ -30,7 +30,7 @@ const Settings = ({userInfo, changeUserInfo}) => {
     '/feed': 'Feed',
     '/settings': 'Settings'
   }
-  AppStyles()
+
   return (
     <>
       <Modal modalOpen={modalOpen} toggleModal={toggleModal} userInfo={userInfo} changeUserInfo={changeUserInfo}/>
@@ -97,22 +97,6 @@ const materialStyles = {
   chip: {
     fontSize: '1.2rem'
   }
-}
-
-
-const AppStyles = () => {
-  const app = document.querySelector('#root')
-  app.height = 'auto'
-
-  app.style.display = 'grid'
-  app.style.gridTemplateRows = '.5fr 1fr 1fr 1fr 1fr'
-  app.style.gridTemplateColumns = '.25fr 1fr 1fr 1fr 1fr '
-  app.style.gridTemplateAreas = `
-  "sidebar header header header header"
-  "sidebar . settings settings sidecard" 
-  "sidebar . settings settings sidecard" 
-  "sidebar . settings settings ." 
-  "sidebar . settings settings ."  `
 }
 
 export default Settings

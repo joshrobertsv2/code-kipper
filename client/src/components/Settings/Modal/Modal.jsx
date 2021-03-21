@@ -47,11 +47,15 @@ import { v4 as uuidv4 } from 'uuid'
 
   const editValue = async (property, ref) => {
     await changeEditState({...editState, [property]: {...editState[property],value: ref.current.value}})
+
+    const Property2 = property.charAt(0).toUpperCase() + property.slice(1)
+    changeUserInfo({...userInfo, [property]: {...userInfo[Property2],value: ref.current.value}})
   }
 
   const changeTheme = async (e) => {
     console.log(e.target.value)
     await changeEditState({...editState, theme: e.target.value})
+    changeUserInfo({...userInfo, Theme: e.target.value})
   }
 
   const stopEditing = async () => {
@@ -98,7 +102,7 @@ import { v4 as uuidv4 } from 'uuid'
       Password: editState.password1.value,
       Email: editState.email.value, 
       Theme: editState.theme,
-      interests: editState.interests
+      Interests: editState.interests
     })
     toggleModal(false)
   }

@@ -5,6 +5,7 @@ import Home from './components/Home/Home'
 import Feed from './components/Feed/Feed'
 import Settings from './components/Settings/Settings'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import styled from 'styled-components'
 
 function App() {
   // eslint-disable-next-line

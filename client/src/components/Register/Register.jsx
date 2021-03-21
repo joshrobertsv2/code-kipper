@@ -7,7 +7,6 @@ import axios from 'axios'
 const Register = () => {
   const nameInput = useRef(), emailInput = useRef(), confirmPasswordInput = useRef(), passwordInput = useRef()
   const history = useHistory()
-  setAppStyles()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -52,14 +51,6 @@ const Register = () => {
       <RegisterText>Already registered? <a href="/login">Login now</a></RegisterText>
     </Container>
   )
-}
-
-const setAppStyles = () => {
-  const app = document.querySelector('#root')
-
-  app.style.display = 'flex'
-  app.style.justifyContent = 'center'
-  app.style.alignItems = 'center'
 }
 
 export default Register
