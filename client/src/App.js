@@ -5,11 +5,10 @@ import Home from './components/Home/Home'
 import Feed from './components/Feed/Feed'
 import Settings from './components/Settings/Settings'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import styled from 'styled-components'
 
 function App() {
   // eslint-disable-next-line
-  const [userId, changeUserId] = useState('604acd00433005638077804a')
+  const [userId, changeUserId] = useState('6056d2222cd46ca4a8734eb5')
   const [userInfo, changeUserInfo] = useState({
     Name: 'Ashley Pean', 
     Email: 'pean.ashley@gmail.com', 
@@ -18,8 +17,11 @@ function App() {
     Theme: 'Tomorrow', 
     Interests: ['JavaScript', 'HTML', 'CSS', 'React', 'Golang'],
   })
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  return (
+
+
+  return isAuthenticated?  (
     <>
       <Router>
         <Switch>
@@ -31,7 +33,21 @@ function App() {
         </Switch>
       </Router>
     </>
-  );
+  ) : ProtectedRoutes
 }
+
+const ProtectedRoutes = (
+  <>
+  <Router>
+    <Switch>
+      <Route exact path = "/login" component={Login} />
+      <Route exact path = "/register" component={Register} />
+      <Route exact path = "/feed" component={Feed}/>
+      <Route exact path = "/" component={Login} />
+    </Switch>
+  </Router>
+</>
+)
+
 
 export default App;

@@ -5,7 +5,9 @@ export const Container = styled.form`
   max-height: 700px;
   width: 50%;
   max-width: 500px;
+  grid-area: content;
   display: flex;
+  margin: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
