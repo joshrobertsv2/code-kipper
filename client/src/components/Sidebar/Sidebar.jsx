@@ -21,7 +21,6 @@ const Sidebar = () => {
 
     if(newLocation === 'logout') {
       axios.get('/logout')
-      history.push('/login')
     }else {
       history.push(`/${newLocation}`)
     }

@@ -28,6 +28,7 @@ const Register = () => {
       passwordInput.current.value = ''
       confirmPasswordInput.current.value = ''
     }
+    return password1 === password2
   }
 
   return (
@@ -46,7 +47,7 @@ const Register = () => {
       <Label>Confirm Password</Label>
       <FormInput type="password" placeholder="confirm password" ref={confirmPasswordInput} />
 
-      <SubmitButton type="submit" onSubmit={handleSubmit} onClick={handleSubmit}>Submit</SubmitButton>
+      <SubmitButton type="submit" onClick={handleSubmit}>Submit</SubmitButton>
 
       <RegisterText>Already registered? <a href="/login">Login now</a></RegisterText>
     </Container>

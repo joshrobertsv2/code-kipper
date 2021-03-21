@@ -28,8 +28,7 @@ import { v4 as uuidv4 } from 'uuid'
   const [interestsText, setInterestsText] = useState('')
 
   const codeSnippet = 
-  `const theme = 'theme' 
-   \nconsole.log('hello world!')`
+  `const theme = 'theme'`
 
   const themeOptions = [dark, coy, okaidia, twilight, tomorrow, solarizedlight]
   const themeStrings = ['Dark', 'Coy', 'Okaidia', 'Twilight', 'Tomorrow', 'Solarized Light']
