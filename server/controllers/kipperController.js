@@ -19,8 +19,6 @@ kipperController.addCodeSnippet = async (req, res) => {
 }
 kipperController.getUserSnippets = (req, res) => {
   const { user_id } = req.params
-
-  console.log(req.isAuthenticated())
   
   Snippets.find({user_id}, (err, data) => {
     if(err) res.status(500).send({message: 'failed', err})
