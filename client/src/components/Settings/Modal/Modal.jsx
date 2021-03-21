@@ -53,7 +53,6 @@ import { v4 as uuidv4 } from 'uuid'
   }
 
   const changeTheme = async (e) => {
-    console.log(e.target.value)
     await changeEditState({...editState, theme: e.target.value})
     changeUserInfo({...userInfo, Theme: e.target.value})
   }
@@ -95,7 +94,7 @@ import { v4 as uuidv4 } from 'uuid'
 
   const updateSettings = async (e) => {
     e.preventDefault()
-    console.log(editState)
+
     await changeUserInfo({
       ...userInfo, 
       Name: editState.username.value, 

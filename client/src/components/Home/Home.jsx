@@ -35,11 +35,6 @@ const Home = ({userId, name, theme}) => {
   }
 
   useEffect(() => {
-    console.log('home component: ', userPosts)
-  }, [userPosts])
-
-
-  useEffect(() => {
     const fetchPosts = async () => {    
       const res = await axios.get(`/kipper/${userId}`)
       const newState = res.data.data

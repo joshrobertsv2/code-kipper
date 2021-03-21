@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Switch, Chip, Button, FormControlLabel, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core'
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -26,10 +26,6 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
     updatedAt: '', 
     _v: ''
   })
-
-  useEffect(() => {
-    console.log('modal: ', userPosts)
-  }, [userPosts])
 
 
   const handleTagInput = async(e) => {
@@ -70,8 +66,6 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
   }
 
   const createSnippet = async () => {
-    console.log('create')
-    console.log(userInput)
     await axios.post(`/kipper/${userId}`, userInput)
     changeUserPosts([...userPosts, userInput])
     setSearchResults([...userPosts, userInput])
@@ -81,9 +75,7 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
   }
 
   const updateSnippet = async () => {
-    console.log('update')
-    console.log(userInput)
-    await axios.put('/kipper/604acd00433005638077804a', userInput)
+    await axios.put(`/kipper/${userId}`, userInput)
     const updatedPost = userInput
 
     const newPostsArr = userPosts
@@ -91,7 +83,6 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
 
     await changeUserPosts(newPostsArr)
     setSearchResults(newPostsArr)
-    console.log(userPosts)
 
     setEditDetails(null)
     changeIsOpen(false)

@@ -14,7 +14,7 @@ const CodeBlock = ({ code, language, theme }) => {
   }
   return (
     <div style={styling}>
-      <SyntaxHighlighter language={language.toLowerCase()} style={themeOpts[theme]} showLineNumbers={true} wrapLines={true} wrapLongLines={true}>
+      <SyntaxHighlighter language={language.toLowerCase()} style={themeOpts[theme]} showLineNumbers={true} wrapLines={true} wrapLongLines={true} data-src="myfile.js" data-download-link>
       {code}
      </SyntaxHighlighter>
     </div>

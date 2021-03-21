@@ -4,7 +4,7 @@ import Register from './components/Register/Register'
 import Home from './components/Home/Home'
 import Feed from './components/Feed/Feed'
 import Settings from './components/Settings/Settings'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 function App() {
   // eslint-disable-next-line
@@ -17,33 +17,37 @@ function App() {
     Theme: 'Tomorrow', 
     Interests: ['JavaScript', 'HTML', 'CSS', 'React', 'Golang'],
   })
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(true)
 
 
 
-  return isAuthenticated?  (
-    <>
-      <Router>
-        <Switch>
-          <Route exact path = "/login" component={Login} />
-          <Route exact path = "/register" component={Register} />
-          <Route exact path = "/feed" component={Feed}/>
-          <Route exact path="/settings" render={() =>  <Settings userInfo={userInfo} changeUserInfo={changeUserInfo}/>} />
-          <Route exact path = "/" render={() => <Home userId={userId} name={userInfo.Name} theme={userInfo.Theme}/>} />
-        </Switch>
-      </Router>
-    </>
-  ) : ProtectedRoutes
+  return isAuthenticated?  AppRoutes(userId, userInfo, changeUserInfo, setIsAuthenticated) : ProtectedRoutes
 }
 
-const ProtectedRoutes = (
-  <>
+const AppRoutes = (userId, userInfo, changeUserInfo, setIsAuthenticated) => (
+<>
   <Router>
     <Switch>
       <Route exact path = "/login" component={Login} />
       <Route exact path = "/register" component={Register} />
       <Route exact path = "/feed" component={Feed}/>
-      <Route exact path = "/" component={Login} />
+      <Route exact path="/settings" render={() =>  <Settings userInfo={userInfo} changeUserInfo={changeUserInfo}/>} />
+      <Route exact path = "/" render={() => <Home userId={userId} name={userInfo.Name} theme={userInfo.Theme}/>} />
+    </Switch>
+  </Router>
+</>
+)
+
+const ProtectedRoutes = (
+<>
+  <Router>
+    <Switch>
+      <Route exact path = "/login" component={Login} />
+      <Route exact path = "/register" component={Register} />
+      <Route exact path = "/feed" component={Feed}/>
+      <Route path = "/" component={Login}>
+        <Redirect to="/login" />
+      </Route>
     </Switch>
   </Router>
 </>
