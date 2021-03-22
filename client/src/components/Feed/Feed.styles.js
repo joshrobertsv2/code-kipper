@@ -54,5 +54,6 @@ export const Profile = styled.p`
 Profile.displayName = 'ProfileCircle'
 
 export const Container = styled.div`
-  grid-area: content`
+  grid-area: content;
+  margin: auto;`
 Container.displayName = 'Feed'
