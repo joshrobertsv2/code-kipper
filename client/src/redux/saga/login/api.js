@@ -7,7 +7,9 @@ API.login = async (user) => {
   try {
     const response = await axios.post('/login', {
       email: user.email, 
-      password: user.password
+      password: user.password,
+      id: user._id,
+      interests: user.interests,
     })
     return response
   }catch(err){

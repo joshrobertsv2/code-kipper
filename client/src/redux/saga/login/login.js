@@ -18,7 +18,6 @@ function* loginSaga({payload}) {
 
   if(result.status === 200) {
     yield put(action.changeAuthStatus(true))
-    yield call(API.redirect)
   }else {
     yield put(action.changeAuthStatus(false))
   }

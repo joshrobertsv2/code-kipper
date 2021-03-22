@@ -7,7 +7,8 @@ import PostsContainer from './PostsContainer/PostsContainer'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import axios from 'axios'
 import Fuse from 'fuse.js'
-
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions/actions'
 
 //TODO : 
 const dummyData = {
@@ -22,11 +23,11 @@ const dummyData = {
   _id: 'kasjd;fkajsdf;lkajsd'
 }
 
-const Home = ({userId, name, theme}) => {
+const Home = ({userId, name, theme, userId1, fetchUserPosts1, userPosts, searchResults}) => {
   const [modalOpen, setOpenModal] = useState(false)
   const [editDetails, setEditDetails] = useState(null)
-  const [searchResults, setSearchResults ] = useState()
-  const [userPosts, changeUserPosts] = useState([dummyData])
+  const [searchResults1, setSearchResults ] = useState()
+  const [userPosts1, changeUserPosts] = useState([dummyData])
   const location = useLocation()
   const currentTabOpts = {
     '/': 'Dashboard', 
@@ -35,15 +36,14 @@ const Home = ({userId, name, theme}) => {
   }
 
   useEffect(() => {
-    const fetchPosts = async () => {    
-      const res = await axios.get(`/kipper/${userId}`)
-      const newState = res.data.data
-      changeUserPosts(newState)
-      setSearchResults(newState)
-    }
-    fetchPosts()
+    fetchUserPosts1(userId)
+    setSearchResults(userPosts)
     // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    console.log(userPosts, Array.isArray(userPosts))
+  }, [userPosts])
 
   const handleSearch = async (e) => {
     const query = e.target.value
@@ -88,4 +88,17 @@ const Home = ({userId, name, theme}) => {
   )
 }
 
-export default Home
+const mapStateToProps = (state) => ({
+  userId: state.user.id,
+  userPosts: state.posts.userPosts,
+  searchResults: state.posts.searchResults,
+  theme: state.user.theme,
+  name: state.user.name, 
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchUserPosts1: user_id => dispatch(actions.fetchUserPosts(user_id)),
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

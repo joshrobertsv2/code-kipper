@@ -25,5 +25,15 @@ export const redirectLoggedInUser = () => ({
   type: types.REDIRECT_USER
 })
 
+//USER POSTS
+export const fetchUserPosts = (user_id) => ({
+  type: types.FETCH_USER_POSTS, 
+  payload: user_id,
+})
+
+export const updateUserPosts = (posts) => ({
+  type: types.UPDATE_USER_POSTS, 
+  payload: posts
+})
 
 

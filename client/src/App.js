@@ -19,8 +19,6 @@ function App({isAuthenticated, changeAuthStatus}) {
     Interests: ['JavaScript', 'HTML', 'CSS', 'React', 'Golang'],
   })
 
-
-
   return isAuthenticated?  AppRoutes(userId, userInfo, changeUserInfo, changeAuthStatus) : ProtectedRoutes
 }
 
@@ -28,11 +26,9 @@ const AppRoutes = (userId, userInfo, changeUserInfo, changeAuthStatus) => (
 <>
   <Router>
     <Switch>
-      <Route exact path = "/login" component={Login} />
-      <Route exact path = "/register" component={Register} />
       <Route exact path = "/feed" component={Feed}/>
       <Route exact path="/settings" render={() =>  <Settings userInfo={userInfo} changeUserInfo={changeUserInfo}/>} />
-      <Route exact path = "/" render={() => <Home userId={userId} name={userInfo.Name} theme={userInfo.Theme}/>} />
+      <Route path = "/" component={Home} />
     </Switch>
   </Router>
 </>

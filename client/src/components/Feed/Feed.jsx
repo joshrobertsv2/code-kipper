@@ -23,7 +23,7 @@ const Feed = () => {
       </styles.Header>
       <Sidebar />
       <styles.Container>
-
+        Coming soon!
       </styles.Container>
     </>
   )

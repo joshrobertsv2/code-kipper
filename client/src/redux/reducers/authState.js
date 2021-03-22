@@ -1,7 +1,7 @@
 import * as types from '../actions/actionTypes'
 
 const initialState = {
-  isAuthenticated: false
+  isAuthenticated: true
 }
 
 const authStateReducer = (state = initialState, { type, payload }) => {
