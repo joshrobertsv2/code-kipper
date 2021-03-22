@@ -11,8 +11,7 @@ const Login = ({ loginUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const email = emailInput.current.value, password = passwordInput.current.value
-    const response = await loginUser({email, password})
-    console.log(response)
+    loginUser({email, password})
   }
 
 

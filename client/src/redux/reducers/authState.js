@@ -7,7 +7,6 @@ const initialState = {
 const authStateReducer = (state = initialState, { type, payload }) => {
   switch(type) {
     case types.CHANGE_AUTH_STATUS: 
-      console.log('changing auth status', payload)
       return {
         isAuthenticated: payload ?? !state.isAuthenticated
       }

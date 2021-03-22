@@ -41,10 +41,6 @@ const Home = ({userId, name, theme, userId1, fetchUserPosts1, userPosts, searchR
     // eslint-disable-next-line
   }, [])
 
-  useEffect(() => {
-    console.log(userPosts, Array.isArray(userPosts))
-  }, [userPosts])
-
   const handleSearch = async (e) => {
     const query = e.target.value
 
