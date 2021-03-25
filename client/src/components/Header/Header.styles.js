@@ -17,6 +17,17 @@ export const CurrentTab = styled.h1`
   margin: 0;`
 CurrentTab.displayName = 'CurrentTab'
 
+export const SearchBar = styled.input`
+  width: 30%;
+  height: 3rem;
+  background-color:rgba(0,0,0,0.4);
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+  padding: 0 1rem;`
+SearchBar.displayName = 'SearchBar'
+
 export const Title = styled.h1`
   font-size: 2rem;
   text-align: center;
