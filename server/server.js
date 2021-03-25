@@ -30,6 +30,9 @@ app.use(session({
   secret: process.env.SECRET_KEY, 
   resave: false, 
   saveUninitialized: true, 
+  store: new MongoStore({
+    mongoUrl: process.env.DB_CONNECTION_STRING
+  }),
   cookie: { 
     httpOnly: true, 
     secure: false, 
@@ -53,6 +56,7 @@ app.use('/login', require('./routes/login'))
 app.use('/logout', require('./routes/logout'))
 app.use('/register', require('./routes/register'))
 app.use('/kipper', require('./routes/kipper'))
+app.use('/user', require('./routes/user'))
 app.use('/', require('./routes/home'))
 
 
