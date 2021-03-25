@@ -15,7 +15,6 @@ const initialState = {
 }
 
 const postsReducer = (state = initialState, { type, payload }) => {
-  console.log(payload)
   switch (type) {
 
   case types.UPDATE_USER_POSTS:

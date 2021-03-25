@@ -80,7 +80,7 @@ import CodeBlock from '../../Code'
       theme: editState.theme,
       id: userInfo.id
     })
-    // toggleModal(false)
+    toggleModal(false)
   }
 
 

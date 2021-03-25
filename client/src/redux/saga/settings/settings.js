@@ -13,9 +13,13 @@ export function* watchForChangeInSettings() {
 }
 
 function* changeSettings({payload}) {
-  console.log(payload.settings)
   try {
     const result = yield call(API.editUser, payload.settings)
+
+    if(result.status === 200) {
+      const {email, interests, theme, name} = result.data.data
+      yield put(action.editUser({email, interests, theme, name}))
+    }else return
   }catch(err) {
     return err
   }
