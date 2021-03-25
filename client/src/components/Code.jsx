@@ -1,9 +1,11 @@
 import React from "react"
+import { connect } from 'react-redux'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
 
-const CodeBlock = ({ code, language, theme }) => {
+const CodeBlock = ({ code, language, theme, themeOverride }) => {
+  console.log(themeOverride)
   const themeOpts = {
     'Dark': dark, 
     'Coy': coy, 
@@ -14,7 +16,7 @@ const CodeBlock = ({ code, language, theme }) => {
   }
   return (
     <div style={styling}>
-      <SyntaxHighlighter language={language.toLowerCase()} style={themeOpts[theme]} showLineNumbers={true} wrapLines={true} wrapLongLines={true} data-src="myfile.js" data-download-link>
+      <SyntaxHighlighter language={language.toLowerCase()} style={themeOpts[themeOverride] || themeOpts[theme]} showLineNumbers={true} wrapLines={true} wrapLongLines={true} data-src="myfile.js" data-download-link>
       {code}
      </SyntaxHighlighter>
     </div>
@@ -30,6 +32,12 @@ const styling = {
   margin: '1rem 0',
 }
 
+const mapStateToProps = (state) => ({
+  theme: state.user.theme,
+})
 
 
-export default CodeBlock
+
+
+
+export default connect(mapStateToProps, null)(CodeBlock)

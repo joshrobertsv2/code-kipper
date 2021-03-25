@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/actions'
 import Header from '../Header/Header'
 
-const Home = ({userId, name, theme, userId1, fetchUserPosts, userPosts}) => {
+const Home = ({userId, name, fetchUserPosts, userPosts}) => {
   const [modalOpen, setOpenModal] = useState(false)
   const [editDetails, setEditDetails] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
@@ -28,13 +28,13 @@ const Home = ({userId, name, theme, userId1, fetchUserPosts, userPosts}) => {
   
   return (
     <>
-      {modalOpen? <Modal changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} userId={userId} theme={theme}/> : null }
+      {modalOpen? <Modal changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} userId={userId} /> : null }
 
       <Header modalOpen={modalOpen} searchFunc={handleSearch} searchBar={true}/>
 
       <Sidebar modalOpen={modalOpen} />
  
-      <PostsContainer modalOpen={modalOpen} setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails}  userId={userId} searchResults={searchResults} username={name} theme={theme} userPosts={userPosts} searchQuery={searchQuery}/>
+      <PostsContainer modalOpen={modalOpen} setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails}  userId={userId} searchResults={searchResults} username={name} userPosts={userPosts} searchQuery={searchQuery}/>
 
       <styles.Sidecard>
         <styles.Button onClick={() => setOpenModal(true)}>Create a snippet</styles.Button>
@@ -46,7 +46,6 @@ const Home = ({userId, name, theme, userId1, fetchUserPosts, userPosts}) => {
 const mapStateToProps = (state) => ({
   userId: state.user.id,
   userPosts: state.posts.userPosts,
-  theme: state.user.theme,
   name: state.user.name, 
 })
 

@@ -18,7 +18,7 @@ const Settings = ({userInfo, changeUserInfo}) => {
   const settings = ['name', 'email', 'password']
   return (
     <>
-      <Modal modalOpen={modalOpen} toggleModal={toggleModal} userInfo={userInfo} changeUserInfo={changeUserInfo}/>
+      {modalOpen? <Modal toggleModal={toggleModal} />: null}
       <Sidebar />
 
       <Header modalOpen={modalOpen} />
@@ -36,7 +36,7 @@ const Settings = ({userInfo, changeUserInfo}) => {
           <styles.Property style={{alignSelf: 'center'}}>THEME: </styles.Property>
           <styles.ThemeContainer>
             <styles.Value>{userInfo.theme}</styles.Value>
-            <Code code="const snippet = 'snippet'" language="javascript" theme={userInfo.theme}/>
+            <Code code="const snippet = 'snippet'" language="javascript" />
           </styles.ThemeContainer>
         </div>
 

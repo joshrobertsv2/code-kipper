@@ -9,7 +9,7 @@ import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import CodeBlock from '../Code'
 
-const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts, theme, setSearchResults }) => {
+const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts, setSearchResults }) => {
   const classes = makeStyles(styles)
   const [tagText, setTagText] = useState('')
   const [userInput, changeUserInput] = useState(editDetails?.snippet ? {...editDetails} : {
@@ -93,8 +93,7 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
     setEditDetails(null)
   }
 
-  return isOpen ?  
-  ReactDOM.createPortal(
+  return ReactDOM.createPortal(
     <Container onSubmit={handleBadSubmit}>
 
       <CancelIcon onClick={closeModal} className={classes.exitIcon}/>
@@ -119,7 +118,7 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
 
       {/* code block */}
 
-      <CodeBlock code={userInput?.snippet || "const snippet = 'Insert text here'"} language={userInput?.language || 'javascript'} theme={theme}/>
+      <CodeBlock code={userInput?.snippet || "const snippet = 'Insert text here'"} language={userInput?.language || 'javascript'} />
 
       {/* description*/}
       <Label htmlFor="description">Description</Label>
@@ -156,7 +155,6 @@ const Modal = ({ isOpen, changeIsOpen, editDetails, setEditDetails, changeUserPo
     </Container>
   , document.querySelector('#portal')
   )
-  : null
 }
 
 const styles = () => {

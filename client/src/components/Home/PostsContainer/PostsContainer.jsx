@@ -13,7 +13,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { v4 as uuidv4 } from 'uuid'
 import Fuse from 'fuse.js'
 
-function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, theme, searchQuery}) {
+function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, searchQuery}) {
   // console.log('searchResults: ', searchResults)
   const classes = makeStyles(materialStyles)()
 
@@ -71,7 +71,7 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
       <styles.Post key={uuidv4()} postId={post._id} id={`post-${idx}`}>
         <styles.Username>{username}</styles.Username>
 
-        <CodeBlock code={post.snippet} language={post?.language || ''} theme={theme}/>
+        <CodeBlock code={post.snippet} language={post?.language || ''} />
 
         <styles.Language><strong>Language: </strong>
           {post.language ? 
@@ -111,17 +111,6 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
   )
 }
 
-{/* <PostsContainer 
-  setOpenModal={setOpenModal} 
-  editDetails={editDetails} 
-  setEditDetails={setEditDetails}
-  modalOpen={modalOpen} 
-  userId={userId} 
-  userPosts={searchResults} 
-  changeUserPosts={changeUserPosts} 
-  username={name} 
-  theme={theme}
-/> */}
 
 const materialStyles = {
   chip: {

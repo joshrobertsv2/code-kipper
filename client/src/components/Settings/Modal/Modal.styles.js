@@ -1,5 +1,48 @@
 import styled from 'styled-components'
 
+export const extraStyles = {
+  interests: {
+    display: 'flex', 
+    flexDirection: 'column', 
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }, 
+}
+
+
+export const materialStyles = {
+  cancel: {
+    alignSelf: 'flex-end',
+  },
+  edit: {
+    alignSelf: 'flex-end',
+    justifySelf: 'flex-end',
+    color: 'white',
+  }, 
+  cancelChanges: {
+    background: 'gray', 
+    color: 'white', 
+    padding: '1rem',
+    width: '30%',
+    display: 'flex',
+    margin: 'auto',
+  },
+  saveChanges: {
+    background: 'green', 
+    color: 'white',
+    padding: '1rem', 
+    width: '30%',
+    display: 'flex',
+    margin: 'auto',
+  }, 
+  chip: {
+    margin: '.3rem',
+    fontSize: '1.2rem', 
+    padding: '.3rem'
+  }
+}
+
 export const Container = styled.form`
   display: flex;
   border-radius: 6px;
@@ -40,6 +83,14 @@ InputField.displayName = 'Username'
 export const ThemeContainer = styled.div`
   margin: 2rem 0;`
 ThemeContainer.displayName = 'ThemeContainer'
+
+export const InterestsContainer = styled.div`
+  display: 'flex'; 
+  flex-direction: 'column'; 
+  flex-wrap: 'wrap';
+  justify-content: 'center';
+  align-items: 'center';`
+InterestsContainer.displayName = 'InterestsContainer'
 
 export const InterestsLabel = styled.label`
   display: inline-flex;
