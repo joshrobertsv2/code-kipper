@@ -10,12 +10,15 @@ import Chip from '@material-ui/core/Chip'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { connect } from 'react-redux'
+import * as actions from '../../redux/actions/actions'
+import Header from '../Header/Header'
 
 
 const Settings = ({userInfo, changeUserInfo}) => {
   const [modalOpen, toggleModal] = useState(false)
   const classes = makeStyles(materialStyles)()
-  const settings = ['Name', 'Email', 'Password']
+  const settings = ['name', 'email', 'password']
   const themeOpts = {
     'Dark': dark, 
     'Coy': coy, 
@@ -36,38 +39,31 @@ const Settings = ({userInfo, changeUserInfo}) => {
       <Modal modalOpen={modalOpen} toggleModal={toggleModal} userInfo={userInfo} changeUserInfo={changeUserInfo}/>
       <Sidebar />
 
-      <styles.Header modalOpen={modalOpen}>
-        <styles.CurrentTab>{currentTabOpts[location.pathname]}</styles.CurrentTab>
-        <styles.Title modalOpen={modalOpen}>CodeKipper</styles.Title>
-        <styles.IconsContainer>
-          <NotificationsIcon fontSize="large"/>
-          <styles.Profile>A</styles.Profile>
-        </styles.IconsContainer>
-      </styles.Header>
+      <Header modalOpen={modalOpen} />
 
       <styles.Container modalOpen={modalOpen}>
         <styles.SettingsOptions key={uuidv4()}>
           {settings.map((setting) => (
             <div key={uuidv4()}>
-              <styles.Property>{`${setting}:`}</styles.Property>
+              <styles.Property>{`${setting.toUpperCase()}:`}</styles.Property>
               <styles.Value>{userInfo[setting]}</styles.Value>
             </div>
           ))}
 
         <div>
-          <styles.Property style={{alignSelf: 'center'}}>Theme: </styles.Property>
+          <styles.Property style={{alignSelf: 'center'}}>THEME: </styles.Property>
           <styles.ThemeContainer>
-            <styles.Value>{userInfo.Theme}</styles.Value>
-            <SyntaxHighlighter language="javascript" style={themeOpts[userInfo.Theme]}>
+            <styles.Value>{userInfo.theme}</styles.Value>
+            <SyntaxHighlighter language="javascript" style={themeOpts[userInfo.theme]}>
               const hello = 'hello'
             </SyntaxHighlighter>
           </styles.ThemeContainer>
         </div>
 
         <div>
-          <styles.Property>Interests: </styles.Property>
+          <styles.Property>INTERESTS: </styles.Property>
           <div style={interestsStyles}>
-            {userInfo.Interests.map(el => (
+            {userInfo.interests.map(el => (
               <Chip key={uuidv4()}label={el} className={classes.chip}/>
             ))}
           </div>
@@ -99,4 +95,13 @@ const materialStyles = {
   }
 }
 
-export default Settings
+const mapStateToProps = (state) => ({
+  userInfo: state.user
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  changeTheme: theme => dispatch(actions.changeSettings({theme}))
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings)
