@@ -73,8 +73,14 @@ import CodeBlock from '../../Code'
 
   const updateSettings = async (e) => {
     e.preventDefault()
-    changeSettings({...userInfo, ...editState})
-    toggleModal(false)
+    changeSettings({
+      name: editState.username.value, 
+      email: editState.email.value, 
+      interests: editState.interests, 
+      theme: editState.theme,
+      id: userInfo.id
+    })
+    // toggleModal(false)
   }
 
 

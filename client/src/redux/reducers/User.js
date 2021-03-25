@@ -19,6 +19,7 @@ const userReducer = (state = initialState, { type, payload }) => {
     return { ...state, ...payload }
   
   case types.EDIT_USER: 
+    console.log('editing user details', payload)
     return {...state, ...payload}
 
   default:

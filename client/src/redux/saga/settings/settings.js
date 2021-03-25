@@ -14,9 +14,9 @@ export function* watchForChangeInSettings() {
 
 function* changeSettings({payload}) {
   console.log(payload.settings)
-  // try {
-  //   yield put()
-  // }catch(err) {
-  //   return err
-  // }
+  try {
+    const result = yield call(API.editUser, payload.settings)
+  }catch(err) {
+    return err
+  }
 }

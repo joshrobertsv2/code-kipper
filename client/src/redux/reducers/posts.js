@@ -8,28 +8,18 @@ const initialState = {
     timestamp: '', 
     snippet: 'test', 
     public: false,
-    description: '', 
-    language: '', 
-    _id: 'kasjd;fkajsdf;lkajsd'
-  }], 
-  searchResults: [{
-    likes: 0, 
-    tags: [''], 
-    post_id: '', 
-    timestamp: '', 
-    snippet: 'test', 
-    public: false,
-    description: '', 
+    description: 'dummy post in state reducer', 
     language: '', 
     _id: 'kasjd;fkajsdf;lkajsd'
   }]
 }
 
 const postsReducer = (state = initialState, { type, payload }) => {
+  console.log(payload)
   switch (type) {
 
   case types.UPDATE_USER_POSTS:
-    return {userPosts: [...payload], searchResults: [...payload]}
+    return {userPosts: [...payload]}
 
   default:
     return state
