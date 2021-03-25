@@ -19,12 +19,10 @@ function* loginSaga({payload}) {
 
   if(result.status === 200) {
     const { email, name, _id, interests, theme } = result.data
-    console.log('reducer: ', email, name, _id, interests)
     yield put(action.editUser({id: _id, name, interests, email, theme}))
     yield put(action.changeAuthStatus(true))
     
   }else {
-    console.log(result)
     yield put(action.changeAuthStatus(false))
   }
 }

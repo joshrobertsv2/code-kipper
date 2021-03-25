@@ -11,7 +11,6 @@ API.login = async (user) => {
       id: user._id,
       interests: user.interests,
     })
-    console.log('API response: ', response)
     return response
   }catch(err){
     return err

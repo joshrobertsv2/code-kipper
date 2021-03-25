@@ -14,7 +14,6 @@ import { v4 as uuidv4 } from 'uuid'
 import Fuse from 'fuse.js'
 
 function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, searchQuery}) {
-  // console.log('searchResults: ', searchResults)
   const classes = makeStyles(materialStyles)()
 
   const deletePost = async (idx, post_id) => {

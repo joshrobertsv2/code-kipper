@@ -5,7 +5,6 @@ import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-sy
 
 
 const CodeBlock = ({ code, language, theme, themeOverride }) => {
-  console.log(themeOverride)
   const themeOpts = {
     'Dark': dark, 
     'Coy': coy, 
