@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import * as styles from './Header.styles'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 
-const Header = ({modalOpen}) => {
+const Header = ({modalOpen, searchBar, searchFunc}) => {
   const location = useLocation()
   const tabs = {
     '/': 'Dashboard', 
@@ -14,6 +14,7 @@ const Header = ({modalOpen}) => {
   return (
     <styles.Header modalOpen={modalOpen}>
     <styles.CurrentTab>{tabs[location.pathname]}</styles.CurrentTab>
+    {searchBar? <styles.SearchBar placeholder="Search here" onChange={searchFunc}/>: null}
     <styles.Title modalOpen={modalOpen}>CodeKipper</styles.Title>
     <styles.IconsContainer>
       <NotificationsIcon fontSize="large"/>

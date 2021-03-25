@@ -11,8 +11,10 @@ import PublicIcon from '@material-ui/icons/Public'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { v4 as uuidv4 } from 'uuid'
+import Fuse from 'fuse.js'
 
-function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, theme}) {
+function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, theme, searchQuery}) {
+  // console.log('searchResults: ', searchResults)
   const classes = makeStyles(materialStyles)()
 
   const deletePost = async (idx, post_id) => {
@@ -49,9 +51,23 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
     setTimeout(() => text.style.visibility = 'hidden', 1500) 
   }
 
+  const filterPosts = (query) => {
+    if(!query || query === ' ' || query === '') {
+      return userPosts
+    }else {
+      const options = {
+        findAllMatches: true,
+        keys: ['filename', 'tags', 'language', 'description', {name: 'snippet', weight: 1}],
+      }
+      const fuse = new Fuse(userPosts, options)
+      const search = fuse.search(query)
+      return search.map(el => el?.item)
+    }
+  }
+
   return (
     <styles.Container modalOpen={modalOpen}>
-    {userPosts?.length > 0 ? userPosts.reduceRight( (acc, post, idx) => acc.concat(
+    {filterPosts(searchQuery).length > 0 ? filterPosts(searchQuery).reduceRight( (acc, post, idx) => acc.concat(
       <styles.Post key={uuidv4()} postId={post._id} id={`post-${idx}`}>
         <styles.Username>{username}</styles.Username>
 
