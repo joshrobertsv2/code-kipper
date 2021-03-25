@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useLocation} from 'react-router-dom'
 import * as styles from './Settings.styles'
 import Sidebar from '../Sidebar/Sidebar'
 import Sidecard from '../Sidecard/Sidecard'
@@ -7,12 +6,12 @@ import { v4 as uuidv4 } from 'uuid'
 import Modal from './Modal/Modal'
 import { makeStyles } from '@material-ui/core/styles'
 import Chip from '@material-ui/core/Chip'
-import NotificationsIcon from '@material-ui/icons/Notifications'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/actions'
 import Header from '../Header/Header'
+import Code from '../Code'
 
 
 const Settings = ({userInfo, changeUserInfo}) => {
@@ -27,13 +26,6 @@ const Settings = ({userInfo, changeUserInfo}) => {
     'Tomorrow': tomorrow, 
     'Solarized Light': solarizedlight,
   }
-  const location = useLocation()
-  const currentTabOpts = {
-    '/': 'Dashboard', 
-    '/feed': 'Feed',
-    '/settings': 'Settings'
-  }
-
   return (
     <>
       <Modal modalOpen={modalOpen} toggleModal={toggleModal} userInfo={userInfo} changeUserInfo={changeUserInfo}/>
@@ -54,9 +46,10 @@ const Settings = ({userInfo, changeUserInfo}) => {
           <styles.Property style={{alignSelf: 'center'}}>THEME: </styles.Property>
           <styles.ThemeContainer>
             <styles.Value>{userInfo.theme}</styles.Value>
-            <SyntaxHighlighter language="javascript" style={themeOpts[userInfo.theme]}>
+            {/* <SyntaxHighlighter language="javascript" style={themeOpts[userInfo.theme]}>
               const hello = 'hello'
-            </SyntaxHighlighter>
+            </SyntaxHighlighter> */}
+            <Code code="const snippet = 'snippet'" language="javascript" theme={userInfo.theme}/>
           </styles.ThemeContainer>
         </div>
 
