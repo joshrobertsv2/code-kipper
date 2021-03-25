@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 import CodeBlock from '../../Code'
 import * as styles from './PostsContainer.styles'
@@ -12,23 +13,14 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { v4 as uuidv4 } from 'uuid'
 import Fuse from 'fuse.js'
+import * as actions from '../../../redux/actions/actions'
 
-function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, searchQuery}) {
+function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, username, searchQuery, deletePostReducer }) {
   const classes = makeStyles(materialStyles)()
 
   const deletePost = async (idx, post_id) => {
-    //Delete post in state
-    let newState = userPosts
-    newState.splice(idx, 1)
-
-    //Send a delete request to the server
-    const res = await axios.delete(`/kipper/${userId}`, {data: {post_id}})
-
-    if(res.data.doc.snippet) {
-      await changeUserPosts([...newState])
-    }else {
-      window.alert('Could not delete post. Please try again later.')
-    }
+    axios.delete(`/kipper/${userId}`, {data: {post_id}})
+    deletePostReducer(idx)
   }
 
   const editPost = async (idx) => {
@@ -133,4 +125,10 @@ const publicIcon = (
 )
 
 
-export default PostsContainer
+const mapDispatchToProps = (dispatch) => ({
+  deletePostReducer: postIdx => dispatch(actions.deletePost(postIdx))
+})
+
+
+
+export default connect(null, mapDispatchToProps)(PostsContainer)

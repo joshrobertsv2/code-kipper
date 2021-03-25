@@ -1,3 +1,5 @@
+import React from 'react'
+import { connect } from 'react-redux'
 import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Switch, Chip, Button, FormControlLabel, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core'
@@ -8,6 +10,7 @@ import languagesObj from '../../utils/supportedLanguages'
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import CodeBlock from '../Code'
+import * as actions from '../../redux/actions/actions'
 
 const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts, setSearchResults }) => {
   const classes = makeStyles(styles)
@@ -177,4 +180,11 @@ const styles = () => {
   }
 }
 
-export default Modal
+
+const mapDispatchToProps = (dispatch) => ({
+  editPosts: newPosts => dispatch(actions.editPost(newPosts))
+})
+
+
+
+export default connect(null, mapDispatchToProps)(Modal)

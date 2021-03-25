@@ -20,6 +20,13 @@ const postsReducer = (state = initialState, { type, payload }) => {
   case types.UPDATE_USER_POSTS:
     return {userPosts: [...payload]}
 
+  case types.DELETE_POST:
+    const { postIdx } = payload
+      const newState = state.userPosts 
+      newState.splice(postIdx, 1)
+
+      return {userPosts: [...newState]}
+
   default:
     return state
   }
