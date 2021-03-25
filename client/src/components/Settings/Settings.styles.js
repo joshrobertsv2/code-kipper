@@ -1,5 +1,19 @@
 import styled from 'styled-components'
 
+export const interestsStyles = {
+  display: 'inline-flex', 
+  flexDirection: 'row', 
+  gap: '.5rem',
+  flexWrap: 'wrap',
+}
+
+export const materialStyles = {
+  chip: {
+    fontSize: '1.2rem'
+  }
+}
+
+
 export const Container = styled.div`
   grid-area: content;
   display: flex;
