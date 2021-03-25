@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import CodeBlock from '../../Code'
-import { Container, Post, Username, Likes, Description, Tag, Privacy, TagContainer, Language, BottomContainer, CopiedText } from './PostsContainer.styles'
+import * as styles from './PostsContainer.styles'
 import { makeStyles } from '@material-ui/core/styles'
 import { Chip } from '@material-ui/core/'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -12,7 +12,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { v4 as uuidv4 } from 'uuid'
 
-export default function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, theme}) {
+function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, changeUserPosts, username, theme}) {
   const classes = makeStyles(materialStyles)()
 
   const deletePost = async (idx, post_id) => {
@@ -50,32 +50,34 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
   }
 
   return (
-    <Container modalOpen={modalOpen}>
+    <styles.Container modalOpen={modalOpen}>
     {userPosts?.length > 0 ? userPosts.reduceRight( (acc, post, idx) => acc.concat(
-      <Post key={uuidv4()} postId={post._id} id={`post-${idx}`}>
-        <Username>{username}</Username>
+      <styles.Post key={uuidv4()} postId={post._id} id={`post-${idx}`}>
+        <styles.Username>{username}</styles.Username>
 
         <CodeBlock code={post.snippet} language={post?.language || ''} theme={theme}/>
 
-        <Language><strong>Language: </strong>
+        <styles.Language><strong>Language: </strong>
           {post.language ? 
             post.language.charAt(0).toUpperCase() + post.language.slice(1) : 
             'N/A'} 
-        </Language>
+        </styles.Language>
 
-        <Description>
+        <styles.Description>
           {post?.description || ''}
-        </Description>
+        </styles.Description>
 
-        <Tag>Tags: </Tag>
-        <TagContainer>
+        <styles.Tag>Tags: </styles.Tag>
+        <styles.TagContainer>
         {post?.tags.map((tag) => (
           <Chip variant="outlined" key={uuidv4()} className={classes.chip}
           label={tag} size="medium"/>
         ))}
-        </TagContainer>
-        <BottomContainer>
-          <Likes><FavoriteIcon color="secondary" />{post?.likes || '0'} </Likes>
+        </styles.TagContainer>
+        <styles.BottomContainer>
+          <styles.Likes>
+            <FavoriteIcon color="secondary" />{post?.likes || '0'} 
+          </styles.Likes>
 
           {post?.public ? publicIcon : privateIcon}
 
@@ -85,13 +87,25 @@ export default function PostsContainer({setOpenModal, setEditDetails, modalOpen,
 
           <FileCopyIcon onClick={(e) => copySnippet(idx)} />
           
-        </BottomContainer>
-          <CopiedText id={`post-${idx}-copied-text`}>Copied!</CopiedText>
-      </Post>
+        </styles.BottomContainer>
+          <styles.CopiedText id={`post-${idx}-copied-text`}>Copied!</styles.CopiedText>
+      </styles.Post>
     ), []): 'No posts found'}
-  </Container>
+  </styles.Container>
   )
 }
+
+{/* <PostsContainer 
+  setOpenModal={setOpenModal} 
+  editDetails={editDetails} 
+  setEditDetails={setEditDetails}
+  modalOpen={modalOpen} 
+  userId={userId} 
+  userPosts={searchResults} 
+  changeUserPosts={changeUserPosts} 
+  username={name} 
+  theme={theme}
+/> */}
 
 const materialStyles = {
   chip: {
@@ -101,15 +115,18 @@ const materialStyles = {
   }
 }
 const privateIcon = (
-  <Privacy>
+  <styles.Privacy>
     <NoEncryptionIcon />
     Private
-  </Privacy>
+  </styles.Privacy>
 )
 
 const publicIcon = (
-  <Privacy>
+  <styles.Privacy>
     <PublicIcon />
     Public
-  </Privacy>
+  </styles.Privacy>
 )
+
+
+export default PostsContainer

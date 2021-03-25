@@ -9,21 +9,24 @@ import { Button } from '@material-ui/core'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark, coy, okaidia, twilight, tomorrow, solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { v4 as uuidv4 } from 'uuid'
+import { connect } from 'react-redux'
+import * as actions from '../../../redux/actions/actions'
 
- const Modal = ({ modalOpen, toggleModal, userInfo, changeUserInfo }) => {
+ const Modal = ({ modalOpen, toggleModal, userInfo, changeSettings }) => {
+   console.log(userInfo)
   const classStyles = makeStyles(extraStyles)()
-  const usernameRef = useRef(userInfo.Name)
-  const emailRef = useRef(userInfo.Email)
-  const password1Ref = useRef(userInfo.Password)
-  const password2Ref = useRef(userInfo.Password)
+  const usernameRef = useRef(userInfo.name)
+  const emailRef = useRef(userInfo.email)
+  const password1Ref = useRef(userInfo.password)
+  const password2Ref = useRef(userInfo.password)
   
   const [editState, changeEditState] = useState({
-    username: {value: userInfo.Name, disabled: true,}, 
-    email: {value: userInfo.Email, disabled: true,}, 
-    password1: {value: userInfo.Password, disabled: true,}, 
-    password2: {value: userInfo.Password, disabled: true,},
-    theme: userInfo.Theme,
-    interests: userInfo.Interests
+    username: {value: userInfo.name, disabled: true,}, 
+    email: {value: userInfo.email, disabled: true,}, 
+    password1: {value: userInfo.password, disabled: true,}, 
+    password2: {value: userInfo.password, disabled: true,},
+    theme: userInfo.theme,
+    interests: userInfo.interests
   })
   const [interestsText, setInterestsText] = useState('')
 
@@ -48,12 +51,12 @@ import { v4 as uuidv4 } from 'uuid'
     await changeEditState({...editState, [property]: {...editState[property],value: ref.current.value}})
 
     const Property2 = property.charAt(0).toUpperCase() + property.slice(1)
-    changeUserInfo({...userInfo, [property]: {...userInfo[Property2],value: ref.current.value}})
+    //changeUserInfo({...userInfo, [property]: {...userInfo[Property2],value: ref.current.value}})
   }
 
   const changeTheme = async (e) => {
     await changeEditState({...editState, theme: e.target.value})
-    changeUserInfo({...userInfo, Theme: e.target.value})
+    //changeUserInfo({...userInfo, Theme: e.target.value})
   }
 
   const stopEditing = async () => {
@@ -75,7 +78,7 @@ import { v4 as uuidv4 } from 'uuid'
     if(e.target.value.includes(',') || e.target.value.includes(' ')) {
       const newInterestsText = interestsText.slice(0, interestsText.length)
 
-      const interestsArr = userInfo.Interests
+      const interestsArr = userInfo.interests
       interestsArr.push(newInterestsText)
 
       await changeEditState({...editState, interests: interestsArr})
@@ -86,7 +89,7 @@ import { v4 as uuidv4 } from 'uuid'
   }
 
   const deleteInterest = (idx) => {
-    const newInterests = userInfo.Interests
+    const newInterests = userInfo.interests
     newInterests.splice(idx, 1) 
     changeEditState({...editState, editState: newInterests})
   }
@@ -94,14 +97,16 @@ import { v4 as uuidv4 } from 'uuid'
   const updateSettings = async (e) => {
     e.preventDefault()
 
-    await changeUserInfo({
-      ...userInfo, 
-      Name: editState.username.value, 
-      Password: editState.password1.value,
-      Email: editState.email.value, 
-      Theme: editState.theme,
-      Interests: editState.interests
-    })
+    changeSettings({...userInfo, ...editState})
+
+    // await changeUserInfo({
+    //   ...userInfo, 
+    //   Name: editState.username.value, 
+    //   Password: editState.password1.value,
+    //   Email: editState.email.value, 
+    //   Theme: editState.theme,
+    //   Interests: editState.interests
+    // })
     toggleModal(false)
   }
 
@@ -156,7 +161,7 @@ import { v4 as uuidv4 } from 'uuid'
         </div>
 
         <div>
-          {userInfo.Interests.map((el, idx) => (
+          {userInfo.interests.map((el, idx) => (
             <Chip key={uuidv4()} label={el} color="primary" onDelete={(e) => deleteInterest(idx)} className={classStyles.chip}/>
           ))}
         </div>
@@ -217,4 +222,13 @@ const extraStyles = {
   }
 }
 
-export default Modal
+const mapStateToProps = (state) => ({
+  
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  changeSettings: settings => dispatch(actions.changeSettings({settings}))
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Modal)

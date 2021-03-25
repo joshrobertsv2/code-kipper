@@ -27,7 +27,7 @@ const AppRoutes = (userId, userInfo, changeUserInfo, changeAuthStatus) => (
   <Router>
     <Switch>
       <Route exact path = "/feed" component={Feed}/>
-      <Route exact path="/settings" render={() =>  <Settings userInfo={userInfo} changeUserInfo={changeUserInfo}/>} />
+      <Route exact path="/settings" component={Settings} />
       <Route path = "/" component={Home} />
     </Switch>
   </Router>

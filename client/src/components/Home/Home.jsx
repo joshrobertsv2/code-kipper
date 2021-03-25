@@ -5,7 +5,6 @@ import Sidebar from '../Sidebar/Sidebar'
 import Modal from '../AddSnippetModal/Modal'
 import PostsContainer from './PostsContainer/PostsContainer'
 import NotificationsIcon from '@material-ui/icons/Notifications'
-import axios from 'axios'
 import Fuse from 'fuse.js'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/actions'
@@ -75,7 +74,7 @@ const Home = ({userId, name, theme, userId1, fetchUserPosts1, userPosts, searchR
 
       <Sidebar modalOpen={modalOpen} />
  
-      <PostsContainer setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} modalOpen={modalOpen} userId={userId} userPosts={searchResults} changeUserPosts={changeUserPosts} username={name} theme={theme}/>
+      <PostsContainer modalOpen={modalOpen} setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails}  userId={userId} userPosts={searchResults} changeUserPosts={changeUserPosts} username={name} theme={theme}/>
 
       <styles.Sidecard>
         <styles.Button onClick={() => setOpenModal(true)}>Create a snippet</styles.Button>
