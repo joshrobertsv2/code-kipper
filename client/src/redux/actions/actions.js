@@ -46,14 +46,19 @@ export const updateUserPosts = (posts) => ({
   payload: posts
 })
 
-export const deletePost = (user_id, post_id) => ({
+export const deletePost = (post_id) => ({
   type: types.DELETE_POST, 
-  payload: {user_id, post_id}
+  payload: {post_id}
 })
 
 export const editPost = (user_id, post_id) => ({
   type: types.EDIT_POST, 
   payload: {user_id, post_id}
+})
+
+export const editAfterDelete = (post_id) => ({
+  type: types.EDIT_AFTER_DELETE, 
+  payload: post_id
 })
 
 //User info 

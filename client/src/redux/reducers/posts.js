@@ -19,13 +19,15 @@ const postsReducer = (state = initialState, { type, payload }) => {
 
   case types.UPDATE_USER_POSTS:
     return {userPosts: [...payload]}
-
-  case types.DELETE_POST:
-    const { postIdx } = payload
-      const newState = state.userPosts 
-      newState.splice(postIdx, 1)
-
-      return {userPosts: [...newState]}
+  
+  case types.EDIT_AFTER_DELETE:
+    const { post_id } = payload
+    console.log('editing', post_id) 
+    let newPosts = state.userPosts
+    console.log(newPosts)
+    newPosts = newPosts.filter(post => post._id !== post_id)
+    console.log(newPosts)
+    return {userPosts: [...newPosts]}
 
   default:
     return state

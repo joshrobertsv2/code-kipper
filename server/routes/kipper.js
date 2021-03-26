@@ -8,6 +8,6 @@ router.get('/:user_id', kipperController.getUserSnippets)
 
 router.put('/:user_id', kipperController.editSnippet)
 
-router.delete('/:user_id', kipperController.deletePost)
+router.delete('/', kipperController.deletePost)
 
 module.exports = router

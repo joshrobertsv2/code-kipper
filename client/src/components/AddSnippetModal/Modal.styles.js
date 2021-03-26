@@ -1,5 +1,32 @@
 import styled from 'styled-components'
 
+export const materialStyles = () => {
+  return {
+    exitIcon: {
+      color: 'red',
+      alignSelf: 'flex-end'
+    }, 
+    button: {
+      width: '15%', 
+      padding: '.5rem 0',
+      alignSelf: 'center',
+    }, 
+    chip: {
+      fontSize: '1.2rem'
+    }, 
+    selectElement: {
+      root: {
+        color: 'red', 
+        background: 'white'
+      },
+      filled: {
+        color: 'red', 
+        background: 'white',
+      }
+    }
+  }
+}
+
 export const Container = styled.form`
   display: flex;
   flex-direction: column;
@@ -8,7 +35,7 @@ export const Container = styled.form`
   max-height: 750px;
   width: 60%;
   max-width: 800px;
-  background: #141732;
+  background: #1a2475;
   position: fixed; 
   padding: 3rem 2rem;
   box-sizing: border-box;

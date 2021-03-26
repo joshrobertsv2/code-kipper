@@ -6,35 +6,51 @@ import PostsContainer from './PostsContainer/PostsContainer'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/actions'
 import Header from '../Header/Header'
+import Fuse from 'fuse.js'
 
 const Home = ({userId, name, fetchUserPosts, userPosts}) => {
   const [modalOpen, setOpenModal] = useState(false)
   const [editDetails, setEditDetails] = useState(null)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [searchResults, setSearchResults] = useState(userPosts)
-
+  const [searchResults, setSearchResults] = useState('')
+  const [editDetails2, setEditDetails2] = useState({
+    isEditing: false, 
+    editIdx: null
+  })
   useEffect(() => {
-    async function loadPosts() {
-      await fetchUserPosts(userId)
-      setSearchResults(userPosts)
-    }
-    loadPosts() 
+    fetchUserPosts(userId)
     // eslint-disable-next-line
   }, [])
 
+  useEffect(() => {
+    setSearchResults(userPosts)
+  }, [userPosts])
+
   const handleSearch = async (e) => {  
-    await setSearchQuery(e.target?.value || null)
+    const query = e?.target?.value || null
+
+    if(query) {
+      const options = {
+        findAllMatches: true,
+        keys: ['filename', 'tags', 'language', 'description', {name: 'snippet', weight: 1}],
+      }
+
+      const fuse = new Fuse(userPosts, options)
+      const search = fuse.search(query)
+      setSearchResults(search.map(el => el?.item))
+    }else {
+      setSearchResults(userPosts)
+    }
   }
   
   return (
     <>
-      {modalOpen? <Modal changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} userId={userId} /> : null }
+      {modalOpen? <Modal changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} userId={userId} editDetails2={editDetails2} searchResults={searchResults} /> : null }
 
       <Header modalOpen={modalOpen} searchFunc={handleSearch} searchBar={true}/>
 
       <Sidebar modalOpen={modalOpen} />
  
-      <PostsContainer modalOpen={modalOpen} setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails}  userId={userId} searchResults={searchResults} username={name} userPosts={userPosts} searchQuery={searchQuery}/>
+      <PostsContainer modalOpen={modalOpen} setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails}  userId={userId}  username={name} userPosts={userPosts} editDetails2={editDetails2} setEditDetails2={setEditDetails2} searchResults={searchResults}/>
 
       <styles.Sidecard>
         <styles.Button onClick={() => setOpenModal(true)}>Create a snippet</styles.Button>

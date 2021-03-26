@@ -5,17 +5,17 @@ import ReactDOM from 'react-dom'
 import { Switch, Chip, Button, FormControlLabel, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core'
 import CancelIcon from '@material-ui/icons/Cancel';
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, TextArea, TagsContainer, Label, Input, Description } from './Modal.styles'
+import * as styles from './Modal.styles'
 import languagesObj from '../../utils/supportedLanguages'
 import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import CodeBlock from '../Code'
 import * as actions from '../../redux/actions/actions'
 
-const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, userId, userPosts, setSearchResults }) => {
-  const classes = makeStyles(styles)
+const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, setSearchResults, editDetails2 }) => {
+  const classes = makeStyles(styles.materialStyles)
   const [tagText, setTagText] = useState('')
-  const [userInput, changeUserInput] = useState(editDetails?.snippet ? {...editDetails} : {
+  const [userInput, changeUserInput] = useState(editDetails?  {...editDetails} : {
     user_id: userId,
     tags: [], 
     public: true, 
@@ -48,10 +48,6 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, use
       
   }
 
-  const handleBadSubmit = (e) => {
-    e.preventDefault()
-  }
-
   const selectLanguage = async (e) => {
     changeUserInput({...userInput, language: e.target.value})
   }
@@ -70,7 +66,7 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, use
 
   const createSnippet = async () => {
     await axios.post(`/kipper/${userId}`, userInput)
-    changeUserPosts([...userPosts, userInput])
+    // changeUserPosts([...userPosts, userInput])
     setSearchResults([...userPosts, userInput])
 
     setEditDetails(null) 
@@ -84,7 +80,7 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, use
     const newPostsArr = userPosts
     newPostsArr[userInput.idx] = updatedPost
 
-    await changeUserPosts(newPostsArr)
+    // await changeUserPosts(newPostsArr)
     setSearchResults(newPostsArr)
 
     setEditDetails(null)
@@ -97,16 +93,16 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, use
   }
 
   return ReactDOM.createPortal(
-    <Container onSubmit={handleBadSubmit}>
+    <styles.Container onSubmit={(e) => e.preventDefault()}>
 
       <CancelIcon onClick={closeModal} className={classes.exitIcon}/>
 
       {/* Select Language */}
       <FormControl>
         <InputLabel id="language" >Language</InputLabel>
-          <Select labelId="language" value={userInput?.language || 'Javascript'} onChange={selectLanguage} >
+          <Select labelId="language" value={userInput?.language} onChange={selectLanguage}  defaultValue="Javascript" variant="filled" className={classes.selectElement}>
             {Object.keys(languagesObj).map((language) => (
-              <MenuItem key={uuidv4()} value={language} className={classes.languageInput}>
+              <MenuItem key={uuidv4()} value={language} >
                 {language}
               </MenuItem>
             ))}
@@ -114,8 +110,8 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, use
       </FormControl>
 
       {/* text input */}
-      <Label htmlFor="code-snippet">Copy code here: </Label>
-      <TextArea id="code-snippet" onChange={e => changeUserInput({...userInput, snippet: e.target.value})} 
+      <styles.Label htmlFor="code-snippet">Copy code here: </styles.Label>
+      <styles.TextArea id="code-snippet" onChange={e => changeUserInput({...userInput, snippet: e.target.value})} 
       placeholder ="const snippet = 'Insert text here'" 
       value={userInput?.snippet || undefined} />
 
@@ -124,8 +120,8 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, use
       <CodeBlock code={userInput?.snippet || "const snippet = 'Insert text here'"} language={userInput?.language || 'javascript'} />
 
       {/* description*/}
-      <Label htmlFor="description">Description</Label>
-      <Description 
+      <styles.Label htmlFor="description">Description</styles.Label>
+      <styles.Description 
         id="description"
         placeholder={userInput?.description || 'Insert Description here...'} 
         value={userInput?.description || undefined}
@@ -134,51 +130,32 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, changeUserPosts, use
 
       {/* Privacy switch */}
       <FormControlLabel
-        control={<Switch checked={userInput.public} color="primary"/>}
-        label={userInput.public? 'Public': 'Private'}
+        control={<Switch checked={userInput?.public} color="primary"/>}
+        label={userInput?.public? 'Public': 'Private'}
         
         onClick={() => changeUserInput({...userInput, public: !userInput.public})}
         />
 
       {/* tag input */}
-      <Label htmlFor="tags">Tags - Press the <strong>space key</strong> or insert a <strong>comma</strong> ( , ) to add a new tag</Label>
-      <Input id="tags" placeholder="Insert tags here..." onChange={handleTagInput}/>
+      <styles.Label htmlFor="tags">Tags - Press the <strong>space key</strong> or insert a <strong>comma</strong> ( , ) to add a new tag</styles.Label>
+      <styles.Input id="tags" placeholder="Insert tags here..." onChange={handleTagInput}/>
         
       {/* tag chip container */}
-      <TagsContainer >
+      <styles.TagsContainer >
       {userInput?.tags?.length > 0 ? userInput.tags.map((tag, idx) => (
         <Chip variant="default" key={uuidv4()} color="primary"
         onDelete={() => deleteTag(idx)} className={classes.chip} size="medium"
         label={tag}/>
       )): null}
-    </TagsContainer>
+    </styles.TagsContainer>
 
     {/* submit button */}
     <Button variant="contained" className={classes.button} color="primary" disableElevation onClick={createOrUpdateSnippet}>Submit</Button>
-    </Container>
+    </styles.Container>
   , document.querySelector('#portal')
   )
 }
 
-const styles = () => {
-  return {
-    exitIcon: {
-      color: 'red',
-      alignSelf: 'flex-end'
-    }, 
-    button: {
-      width: '15%', 
-      padding: '.5rem 0',
-      alignSelf: 'center',
-    }, 
-    chip: {
-      fontSize: '1.2rem'
-    }, 
-    languageInput: {
-      color: 'white'
-    }
-  }
-}
 
 
 const mapDispatchToProps = (dispatch) => ({

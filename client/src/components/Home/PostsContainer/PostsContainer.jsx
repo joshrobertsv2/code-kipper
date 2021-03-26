@@ -12,23 +12,26 @@ import PublicIcon from '@material-ui/icons/Public'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { v4 as uuidv4 } from 'uuid'
-import Fuse from 'fuse.js'
 import * as actions from '../../../redux/actions/actions'
 
-function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, username, searchQuery, deletePostReducer, searchResults }) {
+function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, username, deletePostReducer, editDetails2, setEditDetails2, searchResults }) {
 
   const classes = makeStyles(styles.materialStyles)()
 
-  const deletePost = async (idx, post_id) => {
-    axios.delete(`/kipper/${userId}`, {data: {post_id}})
-    deletePostReducer(idx)
+  //FIX DELTE AND EDIT FUNCtioNS
+
+  const deletePost = async (post_id) => {
+    // axios.delete(`/kipper/${userId}`, {data: {post_id}})
+    console.log(post_id)
+    deletePostReducer(post_id)
   }
 
-  const editPost = async (idx) => {
+  const editPost = async (post_id) => {
     let newState = userPosts
-    const updatedPost = newState[idx]
-    await setEditDetails({...updatedPost, idx})
-    await setOpenModal(true)
+    // const updatedPost = newState[idx]
+    // await setEditDetails({...updatedPost, idx})
+    // await setOpenModal(true)
+    // console.log(idx)
   }
 
   const copySnippet = async (idx) => {
@@ -43,23 +46,9 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
     setTimeout(() => text.style.visibility = 'hidden', 1500) 
   }
 
-  const filterPosts = (query) => {
-    if(!query || query === ' ' || query === '') {
-      return userPosts
-    }else {
-      const options = {
-        findAllMatches: true,
-        keys: ['filename', 'tags', 'language', 'description', {name: 'snippet', weight: 1}],
-      }
-      const fuse = new Fuse(userPosts, options)
-      const search = fuse.search(query)
-      return search.map(el => el?.item)
-    }
-  }
-
   return (
     <styles.Container modalOpen={modalOpen}>
-    {filterPosts(searchQuery).length > 0 ? filterPosts(searchQuery).reduceRight( (acc, post, idx) => acc.concat(
+    {searchResults? searchResults.reduceRight( (acc, post, idx) => acc.concat(
       <styles.Post key={uuidv4()} postId={post._id} id={`post-${idx}`}>
         <styles.Username>{username}</styles.Username>
 
@@ -89,9 +78,9 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
 
           {post?.public ? publicIcon : privateIcon}
 
-          <DeleteIcon color="error" onClick={(e) => deletePost(idx, post._id)}/>
+          <DeleteIcon color="error" onClick={(e) => deletePost(post._id)}/>
         
-          <EditSharpIcon id={`post-${idx}-copy`}onClick={(e) => editPost(idx)} />
+          <EditSharpIcon id={`post-${idx}-copy`}onClick={(e) => editPost(post._id)} />
 
           <FileCopyIcon onClick={(e) => copySnippet(idx)} />
           
@@ -120,7 +109,7 @@ const publicIcon = (
 
 
 const mapDispatchToProps = (dispatch) => ({
-  deletePostReducer: postIdx => dispatch(actions.deletePost(postIdx))
+  deletePostReducer: post_id => dispatch(actions.deletePost(post_id))
 })
 
 
