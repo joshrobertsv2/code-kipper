@@ -2,13 +2,18 @@ const Users = require('../models/Users')
 const controller = {}
 
 controller.checkForUserSession = async (req, res) => {
-  const { name, _id, email, theme, interests } = req.user
+  if(req?.user) {
+    const { name, _id, email, theme, interests } = req.user
 
-  res.status(200).send({
-    message: 'success', 
-    authStatus: req.isAuthenticated(), 
-    user: {name, id: _id, email, theme, interests},
-})
+    res.status(200).send({
+      message: 'success', 
+      authStatus: req.isAuthenticated(), 
+      user: {name, id: _id, email, theme, interests},
+    })
+  }else {
+    res.status(200).send({message: 'success', authStatus: false})
+  }
+
 }
 
 controller.editUserInfo = async (req, res) => {
