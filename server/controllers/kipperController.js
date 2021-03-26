@@ -11,7 +11,6 @@ kipperController.addCodeSnippet = async (req, res) => {
 
   try {
     const data = await Snippets.create({ user_id , snippet, likes, tags, public, description, language })
-    
     res.status(200).send({message: 'success', data})
   }catch(err) {
     res.status(500).send({message: 'failed', err})

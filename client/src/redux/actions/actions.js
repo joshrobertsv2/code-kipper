@@ -36,6 +36,16 @@ export const redirectLoggedInUser = () => ({
 })
 
 //USER POSTS
+export const createUserPost = (post) => ({
+  type: types.CREATE_USER_POST, 
+  payload: post
+})
+
+export const updateAfterCreate = (post) => ({
+  type: types.UPDATE_AFTER_CREATE, 
+  payload: post
+})
+
 export const fetchUserPosts = (user_id) => ({
   type: types.FETCH_USER_POSTS, 
   payload: user_id,

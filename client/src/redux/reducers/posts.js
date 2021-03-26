@@ -41,6 +41,10 @@ const postsReducer = (state = initialState, { type, payload }) => {
     })
     return {userPosts: [...newPosts]}
 
+  case types.UPDATE_AFTER_CREATE: 
+    let createdPost = payload.post 
+    return {userPosts: [...state.userPosts, createdPost]}
+
   default:
     return state
   }

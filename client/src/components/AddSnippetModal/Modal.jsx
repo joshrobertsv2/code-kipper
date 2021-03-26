@@ -7,12 +7,11 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { makeStyles } from '@material-ui/core/styles'
 import * as styles from './Modal.styles'
 import languagesObj from '../../utils/supportedLanguages'
-import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 import CodeBlock from '../Code'
 import * as actions from '../../redux/actions/actions'
 
-const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, setSearchResults, editPost }) => {
+const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, setSearchResults, editPost, createPost }) => {
   const classes = makeStyles(styles.materialStyles)
   const [tagText, setTagText] = useState('')
   const [userInput, changeUserInput] = useState(editDetails?  {...editDetails} : {
@@ -65,9 +64,10 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, s
   }
 
   const createSnippet = async () => {
-    await axios.post(`/kipper/${userId}`, userInput)
-    // changeUserPosts([...userPosts, userInput])
-    setSearchResults([...userPosts, userInput])
+    // await axios.post(`/kipper/${userId}`, userInput)
+    // // changeUserPosts([...userPosts, userInput])
+    // setSearchResults([...userPosts, userInput])
+    createPost(userInput)
 
     setEditDetails(null) 
     changeIsOpen(false) 
@@ -149,7 +149,8 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, s
 
 
 const mapDispatchToProps = (dispatch) => ({
-  editPost: post => dispatch(actions.editPost(post))
+  editPost: post => dispatch(actions.editPost(post)), 
+  createPost: post => dispatch(actions.createUserPost(post))
 })
 
 

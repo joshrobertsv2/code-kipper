@@ -7,6 +7,7 @@ import { watchForLogout } from './logout/logout'
 import { watchForUserAuthCheck } from './checkAuthStatus/checkAuthStatus'
 import { watchForDeletePost } from './deletePost/deletePost'
 import { watchForEdit } from './editPost/editPost'
+import { watchForNewPost } from './createPost/createPost'
 
 export default function* rootSaga() {
   yield spawn(watchUserLogin)
@@ -17,4 +18,5 @@ export default function* rootSaga() {
   yield spawn (watchForUserAuthCheck)
   yield spawn (watchForDeletePost)
   yield spawn (watchForEdit)
+  yield spawn (watchForNewPost)
 }

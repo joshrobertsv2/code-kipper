@@ -20,7 +20,6 @@ const Home = ({userId, name, fetchUserPosts, userPosts}) => {
 
   useEffect(() => {
     async function set() {
-      console.log('user posts updated: ', userPosts)
       await setSearchResults(userPosts)
     }
     set()

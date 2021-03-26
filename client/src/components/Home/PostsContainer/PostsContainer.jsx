@@ -14,8 +14,6 @@ import { v4 as uuidv4 } from 'uuid'
 import * as actions from '../../../redux/actions/actions'
 
 function PostsContainer({setOpenModal, setEditDetails, modalOpen, userPosts, username, deletePostReducer, searchResults }) {
-  console.log('PostsCointainer: ', searchResults)
-
   const classes = makeStyles(styles.materialStyles)()
 
   const deletePost = async (post_id) => {
