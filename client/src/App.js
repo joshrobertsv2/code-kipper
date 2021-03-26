@@ -15,7 +15,7 @@ function App({isAuthenticated, checkAuthStatus}) {
   //eslint-disable-next-line
   }, [])
 
-  return isAuthenticated?  AppRoutes : ProtectedRoutes
+  return isAuthenticated?  AppRoutes : LoginRoutes
 }
 
 const AppRoutes = (
@@ -33,7 +33,7 @@ const AppRoutes = (
 </>
 )
 
-const ProtectedRoutes = (
+const LoginRoutes = (
 <>
   <Router>
     <Switch>
