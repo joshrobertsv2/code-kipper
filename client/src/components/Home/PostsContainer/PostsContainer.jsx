@@ -16,7 +16,7 @@ import Fuse from 'fuse.js'
 import * as actions from '../../../redux/actions/actions'
 
 function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, username, searchQuery, deletePostReducer, searchResults }) {
-  console.log(userPosts, userId, searchResults)
+
   const classes = makeStyles(styles.materialStyles)()
 
   const deletePost = async (idx, post_id) => {

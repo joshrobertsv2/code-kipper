@@ -14,13 +14,12 @@ export function* watchForUserAuthCheck() {
 function* checkForUserAuthStatus() {
   try{
     const {authStatus, userInfo} = yield call(API.checkAuthStatus) //result: BOOLEAN
-    console.log(authStatus)
+
     if(authStatus) {
       yield(put(action.editUser(userInfo)))
     }
     yield(put(action.changeAuthStatus(authStatus)))
   }catch(err) {
-    console.log(err)
     return err
   }
 }

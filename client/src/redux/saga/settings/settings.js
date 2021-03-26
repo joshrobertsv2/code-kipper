@@ -4,7 +4,6 @@ import * as action from '../../actions/actions'
 import API from './api'
 
 export function* watchForChangeInSettings() {
-  console.log('watching for settings')
   try {
     yield takeEvery(actionType.CHANGE_SETTINGS, changeSettings)
   }catch(err) {
