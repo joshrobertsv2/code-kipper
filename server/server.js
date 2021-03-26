@@ -32,7 +32,6 @@ app.use(session({
   saveUninitialized: true, 
   store: new MongoStore({
     mongoUrl: process.env.DB_CONNECTION_STRING, 
-    ttl: 60,//2 * 24 * 60 * 60, // 2 days 
     autoRemove: 'interval',
     autoRemoveInterval: 1, 
     stringify: false, //
