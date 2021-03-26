@@ -54,7 +54,6 @@ kipperController.deletePost = async (req, res) => {
     )
     res.status(200).send({message: 'success', doc})
   }catch(err) {
-    console.log(err)
     res.status(500).send({message: 'failed', err})
   }
 } 
