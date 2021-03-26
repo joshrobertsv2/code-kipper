@@ -12,17 +12,19 @@ const Home = ({userId, name, fetchUserPosts, userPosts}) => {
   const [modalOpen, setOpenModal] = useState(false)
   const [editDetails, setEditDetails] = useState(null)
   const [searchResults, setSearchResults] = useState('')
-  const [editDetails2, setEditDetails2] = useState({
-    isEditing: false, 
-    editIdx: null
-  })
+
   useEffect(() => {
     fetchUserPosts(userId)
     // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
-    setSearchResults(userPosts)
+    async function set() {
+      console.log('user posts updated: ', userPosts)
+      await setSearchResults(userPosts)
+    }
+    set()
+    // eslint-disable-next-line
   }, [userPosts])
 
   const handleSearch = async (e) => {  
@@ -44,13 +46,13 @@ const Home = ({userId, name, fetchUserPosts, userPosts}) => {
   
   return (
     <>
-      {modalOpen? <Modal changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} userId={userId} editDetails2={editDetails2} searchResults={searchResults} /> : null }
+      {modalOpen? <Modal changeIsOpen={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} userPosts={userPosts} userId={userId} searchResults={searchResults} /> : null }
 
       <Header modalOpen={modalOpen} searchFunc={handleSearch} searchBar={true}/>
 
       <Sidebar modalOpen={modalOpen} />
  
-      <PostsContainer modalOpen={modalOpen} setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails}  userId={userId}  username={name} userPosts={userPosts} editDetails2={editDetails2} setEditDetails2={setEditDetails2} searchResults={searchResults}/>
+      <PostsContainer modalOpen={modalOpen} setOpenModal={setOpenModal} editDetails={editDetails} setEditDetails={setEditDetails} username={name} userPosts={userPosts} searchResults={searchResults}/>
 
       <styles.Sidecard>
         <styles.Button onClick={() => setOpenModal(true)}>Create a snippet</styles.Button>

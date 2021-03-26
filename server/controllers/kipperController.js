@@ -33,12 +33,11 @@ kipperController.getUserSnippets = (req, res) => {
 kipperController.editSnippet = async (req, res) => {
   const { user_id, _id, snippet, likes = 0, tags, public, description, language } = req.body
   const post_id = _id
-  
   try{
     const doc = await Snippets.findOneAndUpdate(
       {user_id, _id: post_id},
       { snippet, likes, tags, public, description, language}, 
-      {new: true, useFindAndModify: true}
+      {new: true, useFindAndModify: false}
     )
     res.status(200).send({message: 'success', doc})
   }catch(err) {
@@ -52,7 +51,7 @@ kipperController.deletePost = async (req, res) => {
   try {
     const doc = await Snippets.findOneAndDelete(
       {_id: post_id}, 
-      {useFindAndModify: true}
+      {useFindAndModify: false}
     )
     res.status(200).send({message: 'success', doc})
   }catch(err) {

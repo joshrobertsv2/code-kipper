@@ -15,18 +15,30 @@ const initialState = {
 }
 
 const postsReducer = (state = initialState, { type, payload }) => {
+  let newPosts 
   switch (type) {
-
   case types.UPDATE_USER_POSTS:
     return {userPosts: [...payload]}
   
   case types.EDIT_AFTER_DELETE:
     const { post_id } = payload
     console.log('editing', post_id) 
-    let newPosts = state.userPosts
+    newPosts = state.userPosts
     console.log(newPosts)
     newPosts = newPosts.filter(post => post._id !== post_id)
     console.log(newPosts)
+    return {userPosts: [...newPosts]}
+
+  case types.UPDATE_AFTER_EDIT: 
+    const { post } = payload
+    console.log(post)
+
+    newPosts = state.userPosts
+    newPosts = state.userPosts.map(userPost => {
+      if(userPost._id === post._id) 
+        return post
+      else return userPost
+    })
     return {userPosts: [...newPosts]}
 
   default:

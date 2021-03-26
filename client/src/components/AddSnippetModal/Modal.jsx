@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid'
 import CodeBlock from '../Code'
 import * as actions from '../../redux/actions/actions'
 
-const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, setSearchResults, editDetails2 }) => {
+const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, setSearchResults, editPost }) => {
   const classes = makeStyles(styles.materialStyles)
   const [tagText, setTagText] = useState('')
   const [userInput, changeUserInput] = useState(editDetails?  {...editDetails} : {
@@ -73,16 +73,8 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, s
     changeIsOpen(false) 
   }
 
-  const updateSnippet = async () => {
-    await axios.put(`/kipper/${userId}`, userInput)
-    const updatedPost = userInput
-
-    const newPostsArr = userPosts
-    newPostsArr[userInput.idx] = updatedPost
-
-    // await changeUserPosts(newPostsArr)
-    setSearchResults(newPostsArr)
-
+  const updateSnippet = () => {
+    editPost(userInput)
     setEditDetails(null)
     changeIsOpen(false)
   }
@@ -116,7 +108,6 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, s
       value={userInput?.snippet || undefined} />
 
       {/* code block */}
-
       <CodeBlock code={userInput?.snippet || "const snippet = 'Insert text here'"} language={userInput?.language || 'javascript'} />
 
       {/* description*/}
@@ -132,7 +123,6 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, s
       <FormControlLabel
         control={<Switch checked={userInput?.public} color="primary"/>}
         label={userInput?.public? 'Public': 'Private'}
-        
         onClick={() => changeUserInput({...userInput, public: !userInput.public})}
         />
 
@@ -143,9 +133,9 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, s
       {/* tag chip container */}
       <styles.TagsContainer >
       {userInput?.tags?.length > 0 ? userInput.tags.map((tag, idx) => (
-        <Chip variant="default" key={uuidv4()} color="primary"
+        <Chip variant="default" key={uuidv4()} color="primary" label={tag}
         onDelete={() => deleteTag(idx)} className={classes.chip} size="medium"
-        label={tag}/>
+        />
       )): null}
     </styles.TagsContainer>
 
@@ -159,7 +149,7 @@ const Modal = ({ changeIsOpen, editDetails, setEditDetails, userId, userPosts, s
 
 
 const mapDispatchToProps = (dispatch) => ({
-  editPosts: newPosts => dispatch(actions.editPost(newPosts))
+  editPost: post => dispatch(actions.editPost(post))
 })
 
 

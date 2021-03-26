@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import CodeBlock from '../../Code'
 import * as styles from './PostsContainer.styles'
 import { makeStyles } from '@material-ui/core/styles'
@@ -14,26 +13,21 @@ import FileCopyIcon from '@material-ui/icons/FileCopy'
 import { v4 as uuidv4 } from 'uuid'
 import * as actions from '../../../redux/actions/actions'
 
-function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, username, deletePostReducer, editDetails2, setEditDetails2, searchResults }) {
+function PostsContainer({setOpenModal, setEditDetails, modalOpen, userPosts, username, deletePostReducer, searchResults }) {
+  console.log('PostsCointainer: ', searchResults)
 
   const classes = makeStyles(styles.materialStyles)()
 
-  //FIX DELTE AND EDIT FUNCtioNS
-
   const deletePost = async (post_id) => {
-    // axios.delete(`/kipper/${userId}`, {data: {post_id}})
-    console.log(post_id)
     deletePostReducer(post_id)
   }
 
-  const editPost = async (post_id) => {
-    let newState = userPosts
-    // const updatedPost = newState[idx]
-    // await setEditDetails({...updatedPost, idx})
-    // await setOpenModal(true)
-    // console.log(idx)
+  const editPost = async (post) => {
+    await setEditDetails({...post})
+    await setOpenModal(true)
   }
 
+  //FIX COPY SNIPPET - SHOULD NOT USE USER POSTS (replace w/ searchResults)
   const copySnippet = async (idx) => {
     const snippet = userPosts[idx]?.snippet || 'undefined'
 
@@ -64,7 +58,6 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
           {post?.description || ''}
         </styles.Description>
 
-        {/* <styles.Tag>Tags: </styles.Tag> */}
         <styles.TagContainer>
         {post?.tags.map((tag) => (
           <Chip variant="outlined" key={uuidv4()} className={classes.chip}
@@ -80,7 +73,7 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
 
           <DeleteIcon color="error" onClick={(e) => deletePost(post._id)}/>
         
-          <EditSharpIcon id={`post-${idx}-copy`}onClick={(e) => editPost(post._id)} />
+          <EditSharpIcon id={`post-${idx}-copy`}onClick={(e) => editPost(post)} />
 
           <FileCopyIcon onClick={(e) => copySnippet(idx)} />
           
