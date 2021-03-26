@@ -39,8 +39,7 @@ const ProtectedRoutes = (
     <Switch>
       <Route exact path = "/login" component={Login} />
       <Route exact path = "/register" component={Register} />
-      <Route exact path = "/feed" component={Feed}/>
-      <Route path = "/" component={Login}>
+      <Route path = "/">
         <Redirect to="/login" />
       </Route>
     </Switch>
