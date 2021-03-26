@@ -4,4 +4,6 @@ const userController = require('../controllers/userController')
 
 router.put('/:user_id', userController.editUserInfo)
 
+router.get('/', userController.checkForUserSession)
+
 module.exports = router

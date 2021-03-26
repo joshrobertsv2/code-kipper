@@ -6,6 +6,11 @@ export const changeAuthStatus = (bool) => ({
   payload: bool,
 })
 
+export const checkAuthStatus = () => ({
+  type: types.CHECK_AUTH_STATUS, 
+  payload: {}
+})
+
 export const registerUser = (user) => ({
   type: types.REGISTER_USER, 
   payload: user,

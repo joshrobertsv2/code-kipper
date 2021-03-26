@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {  useEffect } from 'react'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 import Home from './components/Home/Home'
@@ -6,23 +6,19 @@ import Feed from './components/Feed/Feed'
 import Settings from './components/Settings/Settings'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import { connect} from 'react-redux'
+import * as actions from './redux/actions/actions'
 
-function App({isAuthenticated, changeAuthStatus}) {
-  // eslint-disable-next-line
-  const [userId, changeUserId] = useState('6056d2222cd46ca4a8734eb5')
-  const [userInfo, changeUserInfo] = useState({
-    Name: 'Ashley Pean', 
-    Email: 'pean.ashley@gmail.com', 
-    Password: '**********',
-    RealPassword: '', 
-    Theme: 'Tomorrow', 
-    Interests: ['JavaScript', 'HTML', 'CSS', 'React', 'Golang'],
-  })
+function App({isAuthenticated, checkAuthStatus}) {
 
-  return isAuthenticated?  AppRoutes(userId, userInfo, changeUserInfo, changeAuthStatus) : ProtectedRoutes
+  useEffect(() => {
+    checkAuthStatus()
+  //eslint-disable-next-line
+  }, [])
+
+  return isAuthenticated?  AppRoutes : ProtectedRoutes
 }
 
-const AppRoutes = (userId, userInfo, changeUserInfo, changeAuthStatus) => (
+const AppRoutes = (
 <>
   <Router>
     <Switch>
@@ -53,5 +49,8 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.authState.isAuthenticated
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  checkAuthStatus: () => dispatch(actions.checkAuthStatus())
+})
 
-export default connect(mapStateToProps, null)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
