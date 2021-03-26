@@ -15,8 +15,9 @@ import { v4 as uuidv4 } from 'uuid'
 import Fuse from 'fuse.js'
 import * as actions from '../../../redux/actions/actions'
 
-function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, username, searchQuery, deletePostReducer }) {
-  const classes = makeStyles(materialStyles)()
+function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPosts, username, searchQuery, deletePostReducer, searchResults }) {
+  console.log(userPosts, userId, searchResults)
+  const classes = makeStyles(styles.materialStyles)()
 
   const deletePost = async (idx, post_id) => {
     axios.delete(`/kipper/${userId}`, {data: {post_id}})
@@ -74,7 +75,7 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
           {post?.description || ''}
         </styles.Description>
 
-        <styles.Tag>Tags: </styles.Tag>
+        {/* <styles.Tag>Tags: </styles.Tag> */}
         <styles.TagContainer>
         {post?.tags.map((tag) => (
           <Chip variant="outlined" key={uuidv4()} className={classes.chip}
@@ -103,13 +104,6 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userId, userPo
 }
 
 
-const materialStyles = {
-  chip: {
-    color: 'white', 
-    border: '1px solid white',
-    fontSize: '1rem',
-  }
-}
 const privateIcon = (
   <styles.Privacy>
     <NoEncryptionIcon />

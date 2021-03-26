@@ -16,6 +16,11 @@ export const requestLogin = (user) => ({
   payload: user,
 })
 
+export const logoutUser = () => ({
+  type: types.LOGOUT_USER, 
+  payload: {}
+})
+
 export const receiveLoginStatus = (data) => ({
   type: types.RECEIVE_LOGIN_STATUS, 
   data,

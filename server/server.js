@@ -31,12 +31,16 @@ app.use(session({
   resave: false, 
   saveUninitialized: true, 
   store: new MongoStore({
-    mongoUrl: process.env.DB_CONNECTION_STRING
+    mongoUrl: process.env.DB_CONNECTION_STRING, 
+    ttl: 60,//2 * 24 * 60 * 60, // 2 days 
+    autoRemove: 'interval',
+    autoRemoveInterval: 1, 
+    stringify: false, //
   }),
   cookie: { 
     httpOnly: true, 
     secure: false, 
-    maxAge: 5.184E+8 //6 days 
+    maxAge: 1.728e+8 //2 days 
   },
 }))
 

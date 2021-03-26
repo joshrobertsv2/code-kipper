@@ -13,6 +13,20 @@ const languagesObj = {
   'React TSX': 'tsx'
 }
 
+// const extensionsObj = {
+//   Javascript: '.js', 
+//   CSS: '.css', 
+//   Markup: ".md", 
+//   Graphql: '.graphql', 
+//   REGEX: '', 
+//   'C++': '.cpp', 
+//   Ruby: '.rb', 
+//   Golang: '.go', 
+//   Git: '.git', 
+//   'React JSX': '.jsx',
+//   'React TSX': '.tsx'
+// }
+
 
 
 

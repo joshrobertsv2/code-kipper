@@ -1,5 +1,14 @@
 import styled from 'styled-components'
 
+export const materialStyles = {
+  chip: {
+    color: 'white', 
+    border: '1px solid white',
+    fontSize: '1rem',
+  }, 
+  
+}
+
 export const Container = styled.div`
   grid-area: content;
   display: flex;
