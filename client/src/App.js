@@ -23,8 +23,11 @@ const AppRoutes = (
   <Router>
     <Switch>
       <Route exact path = "/feed" component={Feed}/>
-      <Route exact path="/settings" component={Settings} />
-      <Route path = "/" component={Home} />
+      <Route exact path="/settings" component={Settings} />  
+      <Route exact path = "/" component={Home} />
+      <Route>
+        <Redirect to="/"/>
+      </Route>
     </Switch>
   </Router>
 </>
