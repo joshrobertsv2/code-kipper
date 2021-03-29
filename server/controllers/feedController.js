@@ -21,7 +21,10 @@ feedController.getUserFollowingList = async (req, res, next) => {
 feedController.getUserFeedPosts = async (req, res) => {
   try {
     const { following } = res.locals
-    const posts = await Snippets.find({user_id: {$in: following }})
+    const posts = await Snippets
+    .find({user_id: {$in: following }})
+    .populate({path: 'user_id', select: 'name'})
+
     res.status(200).send({message: 'success', posts})
   }catch(err) {
     res.status(500).send({message: 'failed', err})
