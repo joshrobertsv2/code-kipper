@@ -14,9 +14,9 @@ const Header = ({modalOpen, searchBar, searchFunc}) => {
 
   return (
     <styles.Header modalOpen={modalOpen}>
-    <styles.CurrentTab>{tabs[location.pathname]}</styles.CurrentTab>
+    <styles.CurrentTab> {tabs[location.pathname]}</styles.CurrentTab>
     {searchBar? <styles.SearchBar placeholder="Search here" onChange={searchFunc}/>: null}
-    <styles.Title modalOpen={modalOpen}>CodeKipper</styles.Title>
+    <styles.Title modalOpen={modalOpen}>Code Kipper</styles.Title>
     <styles.IconsContainer>
       <NotificationsIcon fontSize="large"/>
       <styles.Profile>A</styles.Profile>

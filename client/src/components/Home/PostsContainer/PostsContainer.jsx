@@ -26,11 +26,9 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userPosts, use
   }
 
   //FIX COPY SNIPPET - SHOULD NOT USE USER POSTS (replace w/ searchResults)
-  const copySnippet = async (idx) => {
-    const snippet = userPosts[idx]?.snippet || 'undefined'
-
+  const copySnippet = async (post_snippet, idx) => {
     const clipboard = navigator.clipboard
-    clipboard.writeText(snippet)
+    clipboard.writeText(post_snippet)
 
     const text = document.querySelector(`#post-${idx}-copied-text`)
     text.style.visibility = 'visible'
@@ -73,7 +71,7 @@ function PostsContainer({setOpenModal, setEditDetails, modalOpen, userPosts, use
         
           <EditSharpIcon id={`post-${idx}-copy`}onClick={(e) => editPost(post)} />
 
-          <FileCopyIcon onClick={(e) => copySnippet(idx)} />
+          <FileCopyIcon onClick={(e) => copySnippet(post.snippet, idx)} />
           
         </styles.BottomContainer>
           <styles.CopiedText id={`post-${idx}-copied-text`}>Copied!</styles.CopiedText>

@@ -4,8 +4,8 @@ import Sidebar from '../Sidebar/Sidebar'
 import Header from '../Header/Header'
 import { connect } from 'react-redux'
 import * as actions from '../../redux/actions/actions'
-import CodeBlock from '../Code'
 import { v4 as uuidv4} from 'uuid'
+import Posts from './Posts/Posts'
 
 const Feed = ({user_id, fetchFeed, feed}) => {
 
@@ -20,11 +20,7 @@ const Feed = ({user_id, fetchFeed, feed}) => {
       <Sidebar />
       <styles.Container>
         {feed.map( (post, idx) => (
-          <div key={uuidv4()}>
-            <p></p>
-            <CodeBlock code={post?.snippet || '//ERROR - cannot load snippet'}
-            language={post?.language || ''}/>
-          </div>
+          <Posts post={post} idx={idx} key={uuidv4()}/>
         ))}
       </styles.Container>
     </>

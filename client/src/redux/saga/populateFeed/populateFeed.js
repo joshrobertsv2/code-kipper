@@ -9,7 +9,6 @@ export function* watchForFeed() {
   }catch(err) {
     return err
   }
-  
 }
 
 function* loadUserFeed({payload: {user_id}}) {
