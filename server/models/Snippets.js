@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ObjectID = mongoose.Schema.ObjectId
 
 const options = {
   timestamps: true,
@@ -8,8 +9,8 @@ const options = {
 
 const SnippetsSchema = new mongoose.Schema({
   user_id: {
-    type: String, 
-    required: true,
+    type: ObjectID, 
+    ref: "Users",
   },  
   snippet: {
     type: String, 
@@ -20,10 +21,7 @@ const SnippetsSchema = new mongoose.Schema({
     required: true, 
     default: 0,
   }, 
-  tags: {
-    type: Array, 
-    default: []
-  },
+  tags: [{type: String}],
   public: {
     type: Boolean
   }, 
