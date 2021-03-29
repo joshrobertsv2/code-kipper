@@ -8,12 +8,13 @@ import DynamicFeedIcon from '@material-ui/icons/DynamicFeed'
 import SettingsIcon from '@material-ui/icons/Settings'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Logo from '../../images/codekipper-logo.png'
+import SearchIcon from '@material-ui/icons/Search'
 import * as actions from '../../redux/actions/actions'
 
 
 const Sidebar = ({logoutUser}) => {
-  const sideBarIcons = [<HomeIcon />, <DynamicFeedIcon />, <SettingsIcon />, <ExitToAppIcon />]
-  const sideBarUrls = ['', 'feed', 'settings', 'logout']
+  const sideBarIcons = [<HomeIcon />, <SearchIcon />,  <DynamicFeedIcon />, <SettingsIcon />, <ExitToAppIcon />]
+  const sideBarUrls = ['', 'explore', 'feed',  'settings', 'logout']
   const history = useHistory()
   const location = useLocation()
 

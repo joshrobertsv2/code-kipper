@@ -13,6 +13,8 @@ const languagesObj = {
   'React TSX': 'tsx'
 }
 
+//TODO: ADD THIS EXTENSION OBJ AND INCORPORATE A FILENAME FOR EACH SNIPPET
+
 // const extensionsObj = {
 //   Javascript: '.js', 
 //   CSS: '.css', 

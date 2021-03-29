@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const ObjectID = mongoose.Schema.ObjectId
 
 const options =   {
   timestamps: true,
@@ -24,7 +25,9 @@ const UsersSchema = new mongoose.Schema({
   }, 
   theme: {
     type: String,
-  }
+  }, 
+  followers: [{type: ObjectID, ref: 'Users' }], 
+  following: [{type: ObjectID, ref: 'Users' }]
 
 }, options)
 

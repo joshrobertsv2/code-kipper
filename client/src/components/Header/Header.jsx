@@ -8,6 +8,7 @@ const Header = ({modalOpen, searchBar, searchFunc}) => {
   const tabs = {
     '/': 'Dashboard', 
     '/feed': 'Feed',
+    '/explore': 'Explore',
     '/settings': 'Settings'
   }
 

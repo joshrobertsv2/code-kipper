@@ -86,3 +86,14 @@ export const editUser = (settings) => ({
   type: types.EDIT_USER, 
   payload: settings
 })
+
+//User feeed 
+export const fetchUserFeed = (user_id) => ({
+  type: types.FETCH_USER_FEED,
+  payload: {user_id}
+})
+
+export const loadUserFeed = (posts) => ({
+  type: types.LOAD_USER_FEED,
+  payload: posts
+}) 

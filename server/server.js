@@ -60,6 +60,7 @@ app.use('/logout', require('./routes/logout'))
 app.use('/register', require('./routes/register'))
 app.use('/kipper', require('./routes/kipper'))
 app.use('/user', require('./routes/user'))
+app.use('/feed', require('./routes/feed'))
 app.use('/', require('./routes/home'))
 
 
