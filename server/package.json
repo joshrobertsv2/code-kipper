@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "nodemon server.js"
   },
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.4.0",

@@ -3,7 +3,9 @@ const express = require('express')
 const loginController = {}
 
 loginController.sendResponse = (req, res) => {
+  console.log('logincontroller');
   const { name, email, _id, interests, theme } = req.user
+  
   if(req.user){
     req.login(req.user, (err) => {
       if(err) done(err)

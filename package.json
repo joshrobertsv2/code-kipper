@@ -4,6 +4,7 @@
     "server": "cd server && nodemon server.js",
     "dev": ""
   },
+  "proxy": "http://localhost:3001",
   "devDependencies": {
     "nodemon": "^2.0.7"
   },

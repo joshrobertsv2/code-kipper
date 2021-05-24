@@ -7,6 +7,7 @@ const passportLocal = new LocalStrategy(
   {usernameField:"email", passwordField:"password"},
   function(username, password, done) {
     Users.findOne({ email: username }, function(err, user) {
+      console.log('user', user)
       if (err) 
         return done(err)
       else if (!user) 
